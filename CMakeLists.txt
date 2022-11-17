@@ -13,8 +13,8 @@ target_compile_features(visualiser PRIVATE cxx_std_11)
 
 target_link_libraries(visualiser
   PRIVATE
-  glfw
   GLEW::GLEW
   GLUT::GLUT
+  glfw
   glm::glm
   tinyfiledialogs::tinyfiledialogs)
