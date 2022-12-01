@@ -12,16 +12,14 @@
 #include "doctest.h"
 
 
-TEST_CASE( "STD 1: AudioProvider returns true when opening an existing file successfully"  ) {
-    AudioProvider provider = AudioProvider();
-    CHECK(provider.openFile("media/audio/test.mp3") == true);
-}
+TEST_SUITE("AudioProvider") {
+    TEST_CASE("AudioProvider returns true when opening an existing file successfully") {
+        AudioProvider provider = AudioProvider();
+        CHECK(provider.openFile("media/audio/test.mp3") == true);
+    }
 
-TEST_CASE("STD 2: AudioProvider returns false when reading a nonexistant file") {
-    AudioProvider provider = AudioProvider();
-    CHECK(provider.openFile("fakefile.mp3") == false);
-}
-
-TEST_CASE("ADV 1: Doing somethign advanced") {
-    
+    TEST_CASE("AudioProvider returns false when reading a nonexistant file") {
+        AudioProvider provider = AudioProvider();
+        CHECK(provider.openFile("fakefile.mp3") == false);
+    }
 }
