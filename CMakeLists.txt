@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.15)
 
 project(visualiser CXX)
 
+find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(GLUT REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
@@ -9,10 +10,16 @@ find_package(glm CONFIG REQUIRED)
 find_package(tinyfiledialogs REQUIRED)
 
 add_executable(visualiser Project.cpp Project.h LoadShaders.cpp LoadShaders.h stb_image.h tests/doctest.h tests/tests.h)
+add_custom_target(copy_assets
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_LIST_DIR}/media ${CMAKE_CURRENT_BINARY_DIR}/media
+)
+add_dependencies(visualiser copy_assets)
+
 target_compile_features(visualiser PRIVATE cxx_std_11)
 
 target_link_libraries(visualiser
   PRIVATE
+  OpenGL::GL
   GLEW::GLEW
   GLUT::GLUT
   glfw
