@@ -6,7 +6,10 @@
 
 class AudioProvider {
 private:
-	std::vector<float> floats;
+	std::ifstream* currentStream;
+	lame_global_flags* lameFlags;
+	hip_global_flags* hipFlags;
 public:
+	AudioProvider();
 	bool openFile(std::string filename);
 };
