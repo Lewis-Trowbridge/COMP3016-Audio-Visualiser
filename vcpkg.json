@@ -1,0 +1,12 @@
+{
+  "name": "visualiser",
+  "version-string": "0.1.0",
+  "dependencies": [
+    "opengl",
+    "glew",
+    "freeglut",
+    "glfw3",
+    "glm",
+    "tinyfiledialogs"
+  ]
+}
