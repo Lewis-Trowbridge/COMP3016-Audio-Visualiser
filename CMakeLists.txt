@@ -7,7 +7,8 @@ find_package(GLEW REQUIRED)
 find_package(GLUT REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
-find_package(tinyfiledialogs REQUIRED)
+find_package(tinyfiledialogs REQUIRED) 
+find_package(mp3lame CONFIG REQUIRED)
 
 add_executable(visualiser Project.cpp Project.h LoadShaders.cpp LoadShaders.h stb_image.h tests/doctest.h tests/tests.h)
 add_custom_target(copy_assets
@@ -24,4 +25,5 @@ target_link_libraries(visualiser
   GLUT::GLUT
   glfw
   glm::glm
-  tinyfiledialogs::tinyfiledialogs)
+  tinyfiledialogs::tinyfiledialogs
+  mp3lame::mp3lame)
