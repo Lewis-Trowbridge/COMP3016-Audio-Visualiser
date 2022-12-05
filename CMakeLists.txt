@@ -7,8 +7,8 @@ find_package(GLEW REQUIRED)
 find_package(GLUT REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
-find_package(tinyfiledialogs REQUIRED) 
-find_package(mp3lame CONFIG REQUIRED)
+find_package(tinyfiledialogs REQUIRED)
+find_package(mpg123 CONFIG REQUIRED)
 
 add_executable(visualiser Project.cpp Project.h LoadShaders.cpp LoadShaders.h stb_image.h tests/doctest.h tests/tests.h "AudioProvider.h" "AudioProvider.cpp")
 add_custom_target(copy_assets
@@ -26,4 +26,5 @@ target_link_libraries(visualiser
   glfw
   glm::glm
   tinyfiledialogs::tinyfiledialogs
-  mp3lame::mp3lame)
+  MPG123::libmpg123
+  MPG123::libout123)

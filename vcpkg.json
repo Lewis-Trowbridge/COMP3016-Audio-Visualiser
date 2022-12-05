@@ -8,6 +8,6 @@
     "glfw3",
     "glm",
     "tinyfiledialogs",
-	"mp3lame"
+    "mpg123"
   ]
 }

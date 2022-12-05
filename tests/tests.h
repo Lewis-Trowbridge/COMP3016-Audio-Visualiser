@@ -22,4 +22,10 @@ TEST_SUITE("AudioProvider") {
         AudioProvider provider = AudioProvider();
         CHECK(provider.openFile("fakefile.mp3") == false);
     }
+
+    TEST_CASE("AudioProvider returns PCM data from valid file") {
+        AudioProvider provider = AudioProvider();
+        provider.openFile("media/audio/test.mp3");
+        provider.getFrame();
+    }
 }
