@@ -26,6 +26,7 @@ TEST_SUITE("AudioProvider") {
     TEST_CASE("AudioProvider returns PCM data from valid file") {
         AudioProvider provider = AudioProvider();
         provider.openFile("media/audio/test.mp3");
-        provider.getFrame();
+        std::vector<float> actual = provider.getFrame();
+        CHECK(actual.size() > 0);
     }
 }
