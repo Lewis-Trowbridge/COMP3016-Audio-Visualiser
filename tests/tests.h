@@ -29,4 +29,10 @@ TEST_SUITE("AudioProvider") {
         std::vector<float> actual = provider.getFrame();
         CHECK(actual.size() > 0);
     }
+
+    TEST_CASE("AudioProvider returns an empty vector when a file has not been opened") {
+        AudioProvider provider = AudioProvider();
+        std::vector<float> actual = provider.getFrame();
+        CHECK(actual.size() == 0);
+    }
 }
