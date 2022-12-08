@@ -15,7 +15,7 @@
 TEST_SUITE("AudioProvider") {
     TEST_CASE("AudioProvider returns true when opening an existing file successfully") {
         AudioProvider provider = AudioProvider();
-        CHECK(provider.openFile("media/audio/test.mp3") == true);
+        CHECK(provider.openFile("media/audio/tone.mp3") == true);
     }
 
     TEST_CASE("AudioProvider returns false when reading a nonexistant file") {
@@ -25,7 +25,7 @@ TEST_SUITE("AudioProvider") {
 
     TEST_CASE("AudioProvider returns PCM data from valid file") {
         AudioProvider provider = AudioProvider();
-        provider.openFile("media/audio/test.mp3");
+        provider.openFile("media/audio/tone.mp3");
         std::vector<float> actual = provider.getFrame();
         CHECK(actual.size() > 0);
     }
