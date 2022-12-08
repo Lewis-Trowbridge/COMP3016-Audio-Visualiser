@@ -8,6 +8,7 @@
     "glfw3",
     "glm",
     "tinyfiledialogs",
-    "mpg123"
+    "mpg123",
+    "fftwpp"
   ]
 }
