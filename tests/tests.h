@@ -7,6 +7,7 @@
 #include <string>
 #include "../Project.h" 
 #include "../AudioProvider.h"
+#include "../models/ModelDraw.h"
 //#define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "doctest.h"
@@ -34,5 +35,21 @@ TEST_SUITE("AudioProvider") {
         AudioProvider provider = AudioProvider();
         std::vector<float> actual = provider.getFrame();
         CHECK(actual.size() == 0);
+    }
+}
+
+TEST_SUITE("Mesh") {
+    TEST_CASE("Mesh init from file reads vertex information correctly") {
+        Mesh mesh = Mesh();
+        mesh.initFromFile("media/models/cube.obj");
+        REQUIRE(mesh.vertices.size() == 24);
+
+        CHECK(mesh.vertices[0].x == 1.0f);
+        CHECK(mesh.vertices[0].y == 1.0f);
+        CHECK(mesh.vertices[0].z == -1.0f);
+
+        CHECK(mesh.vertices[12].x == -1.0f);
+        CHECK(mesh.vertices[12].y == 1.0f);
+        CHECK(mesh.vertices[12].z == -1.0f);
     }
 }

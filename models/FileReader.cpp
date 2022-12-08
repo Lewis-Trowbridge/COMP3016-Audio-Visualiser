@@ -15,20 +15,6 @@
 #include <sstream>
 #include <regex>
 
-std::vector<std::string> splitString(std::string toSplit, std::string delimiter) {
-	std::vector<std::string> result = std::vector<std::string>();
-	size_t start = 0;
-	size_t end = toSplit.find(delimiter);
-	while (end != std::string::npos) {
-		result.push_back(toSplit.substr(start, end));
-		toSplit = toSplit.substr(end + 1);
-		start = end;
-		end = toSplit.find(delimiter);
-	}
-	result.push_back(toSplit);
-	return result;
-}
-
 constexpr auto POS_KEY = "pos";
 constexpr auto SUBPOS_KEY = "subpos";
 // Map to store regexes statically, keys in format {file-format}_{subject}
