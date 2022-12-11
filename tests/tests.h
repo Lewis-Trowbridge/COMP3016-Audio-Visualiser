@@ -57,5 +57,29 @@ TEST_SUITE("Mesh") {
         Mesh mesh = Mesh();
         mesh.initFromFile("media/models/cube.obj");
         REQUIRE(mesh.indices.size() == 36);
+
+        CHECK(mesh.indices[0].x == 2);
+        CHECK(mesh.indices[0].y == 1);
+        CHECK(mesh.indices[0].z == 1);
+
+        CHECK(mesh.indices[1].x == 15);
+        CHECK(mesh.indices[1].y == 2);
+        CHECK(mesh.indices[1].z == 1);
+
+        CHECK(mesh.indices[2].x == 21);
+        CHECK(mesh.indices[2].y == 3);
+        CHECK(mesh.indices[2].z == 1);
+
+        CHECK(mesh.indices[33].x == 18);
+        CHECK(mesh.indices[33].y == 21);
+        CHECK(mesh.indices[33].z == 6);
+
+        CHECK(mesh.indices[34].x == 1);
+        CHECK(mesh.indices[34].y == 23);
+        CHECK(mesh.indices[34].z == 6);
+
+        CHECK(mesh.indices[35].x == 5);
+        CHECK(mesh.indices[35].y == 24);
+        CHECK(mesh.indices[35].z == 6);
     }
 }
