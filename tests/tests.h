@@ -52,4 +52,10 @@ TEST_SUITE("Mesh") {
         CHECK(mesh.vertices[12].y == 1.0f);
         CHECK(mesh.vertices[12].z == -1.0f);
     }
+
+    TEST_CASE("Mesh init from file reads vertex index/face information correctly") {
+        Mesh mesh = Mesh();
+        mesh.initFromFile("media/models/cube.obj");
+        REQUIRE(mesh.indices.size() == 36);
+    }
 }

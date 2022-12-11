@@ -1,6 +1,6 @@
 #include "ModelDraw.h"
 
-Mesh::Mesh(std::vector<glm::vec3> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures) {
+Mesh::Mesh(std::vector<glm::vec3> vertices, std::vector<glm::vec3> indices, std::vector<Texture> textures) {
 	this->vertices = vertices;
 	this->indices = indices;
 	this->textures = textures;
@@ -12,8 +12,8 @@ Mesh::Mesh() {
     EBO = 0;
 }
 
-glm::vec3 stringToVec3(std::string valueString) {
-    std::vector<std::string> values = splitString(valueString, " ");
+glm::vec3 stringToVec3(std::string valueString, std::string delimiter) {
+    std::vector<std::string> values = splitString(valueString, delimiter);
     return glm::vec3(stof(values[0]), stof(values[1]), stof(values[2]));
 }
 
@@ -25,12 +25,32 @@ bool Mesh::initFromFile(std::string filename) {
     std::string object = reader.getElement("object")[0];
     do {
         object = reader.getNextElement("object")[0];
-        std::string vertex;
-        vertices.push_back(stringToVec3(reader.getElementAttribute("object", "vertex")));
-        while ((vertex = reader.getNextElementAttribute("object", "vertex")) != "") {
-            vertices.push_back(stringToVec3(vertex));
+        std::string stringValue;
+
+        // Move the subposition to the first vertex
+        vertices.push_back(stringToVec3(reader.getElementAttribute("object", "vertex"), " "));
+        // Read the rest of the vertices
+        while ((stringValue = reader.getNextElementAttribute("object", "vertex")) != "") {
+            vertices.push_back(stringToVec3(stringValue, " "));
+        }
+
+        // Move the subposition to the first face
+        std::vector<std::string> faceTriplets = splitString(reader.getElementAttribute("object", "face"), " ");
+        for (int i = 0; i < faceTriplets.size(); i++)
+        {
+            indices.push_back(stringToVec3(faceTriplets[i], "/"));
+        }
+        // Read the rest of the faces
+        while ((stringValue = reader.getNextElementAttribute("object", "face")) != "") {
+            std::vector<std::string> faceTriplets = splitString(stringValue, " ");
+            for (int i = 0; i < faceTriplets.size(); i++)
+            {
+                indices.push_back(stringToVec3(faceTriplets[i], "/"));
+            }
         }
     } while (object != "");
+
+
     return true;
 }
 

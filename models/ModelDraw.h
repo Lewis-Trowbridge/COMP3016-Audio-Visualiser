@@ -21,10 +21,10 @@ class Mesh {
 public:
     // mesh data
     std::vector<glm::vec3>       vertices;
-    std::vector<unsigned int> indices;
+    std::vector<glm::vec3> indices;
     std::vector<Texture>      textures;
 
-    Mesh(std::vector<glm::vec3> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
+    Mesh(std::vector<glm::vec3> vertices, std::vector<glm::vec3> indices, std::vector<Texture> textures);
     Mesh();
     bool initFromFile(std::string filename);
     void Draw();
