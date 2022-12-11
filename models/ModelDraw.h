@@ -20,10 +20,11 @@ struct Texture {
 class Mesh {
 public:
     // mesh data
-    std::vector<glm::vec3>       vertices;
+    std::vector<glm::vec3> vertices;
     std::vector<glm::vec3> indices;
     std::vector<glm::vec2> texCoords;
-    std::vector<Texture>      textures;
+    std::vector<glm::vec3> normals;
+    std::vector<Texture> textures;
 
     Mesh(std::vector<glm::vec3> vertices, std::vector<glm::vec3> indices, std::vector<Texture> textures);
     Mesh();

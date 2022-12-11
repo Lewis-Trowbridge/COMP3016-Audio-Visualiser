@@ -63,7 +63,20 @@ TEST_SUITE("Mesh") {
 
         CHECK(mesh.texCoords[23].x == 0.375f);
         CHECK(mesh.texCoords[23].y == 0.5f);
-        
+    }
+
+    TEST_CASE("Mesh init from file reads texture coordinate information correctly") {
+        Mesh mesh = Mesh();
+        mesh.initFromFile("media/models/cube.obj");
+        REQUIRE(mesh.normals.size() == 6);
+
+        CHECK(mesh.normals[0].x == 0.0f);
+        CHECK(mesh.normals[0].y == 1.0f);
+        CHECK(mesh.normals[0].z == 0.0f);
+
+        CHECK(mesh.normals[5].x == 0.0f);
+        CHECK(mesh.normals[5].y == 0.0f);
+        CHECK(mesh.normals[5].z == -1.0f);
     }
 
     TEST_CASE("Mesh init from file reads vertex index/face information correctly") {

@@ -39,11 +39,18 @@ bool Mesh::initFromFile(std::string filename) {
             vertices.push_back(stringToVec3(stringValue, " "));
         }
 
-        // Move the subposition to the first vertex
+        // Move the subposition to the first texcoord
         texCoords.push_back(stringToVec2(reader.getElementAttribute("object", "vertex-texture"), " "));
-        // Read the rest of the vertices
+        // Read the rest of the texcoords
         while ((stringValue = reader.getNextElementAttribute("object", "vertex-texture")) != "") {
             texCoords.push_back(stringToVec2(stringValue, " "));
+        }
+
+        // Move the subposition to the first normal
+        normals.push_back(stringToVec3(reader.getElementAttribute("object", "vertex-normal"), " "));
+        // Read the rest of the normal
+        while ((stringValue = reader.getNextElementAttribute("object", "vertex-normal")) != "") {
+            normals.push_back(stringToVec3(stringValue, " "));
         }
 
         // Move the subposition to the first face
