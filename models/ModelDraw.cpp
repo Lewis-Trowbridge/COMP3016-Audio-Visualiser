@@ -17,6 +17,11 @@ glm::vec3 stringToVec3(std::string valueString, std::string delimiter) {
     return glm::vec3(stof(values[0]), stof(values[1]), stof(values[2]));
 }
 
+glm::vec2 stringToVec2(std::string valueString, std::string delimiter) {
+    std::vector<std::string> values = splitString(valueString, delimiter);
+    return glm::vec2(stof(values[0]), stof(values[1]));
+}
+
 bool Mesh::initFromFile(std::string filename) {
     FileReader reader = FileReader();
     if (!reader.openFile(filename)) {
@@ -32,6 +37,13 @@ bool Mesh::initFromFile(std::string filename) {
         // Read the rest of the vertices
         while ((stringValue = reader.getNextElementAttribute("object", "vertex")) != "") {
             vertices.push_back(stringToVec3(stringValue, " "));
+        }
+
+        // Move the subposition to the first vertex
+        texCoords.push_back(stringToVec2(reader.getElementAttribute("object", "vertex-texture"), " "));
+        // Read the rest of the vertices
+        while ((stringValue = reader.getNextElementAttribute("object", "vertex-texture")) != "") {
+            texCoords.push_back(stringToVec2(stringValue, " "));
         }
 
         // Move the subposition to the first face
