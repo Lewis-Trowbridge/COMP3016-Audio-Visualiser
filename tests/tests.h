@@ -42,70 +42,70 @@ TEST_SUITE("Mesh") {
     TEST_CASE("Mesh init from file reads vertex information correctly") {
         Mesh mesh = Mesh();
         mesh.initFromFile("media/models/cube.obj");
-        REQUIRE(mesh.vertices.size() == 24);
+        REQUIRE(mesh.vertices.size() == 72);
 
-        CHECK(mesh.vertices[0].x == 1.0f);
-        CHECK(mesh.vertices[0].y == 1.0f);
-        CHECK(mesh.vertices[0].z == -1.0f);
+        CHECK(mesh.vertices[0] == 1.0f);
+        CHECK(mesh.vertices[1] == 1.0f);
+        CHECK(mesh.vertices[2] == -1.0f);
 
-        CHECK(mesh.vertices[12].x == -1.0f);
-        CHECK(mesh.vertices[12].y == 1.0f);
-        CHECK(mesh.vertices[12].z == -1.0f);
+        CHECK(mesh.vertices[36] == -1.0f);
+        CHECK(mesh.vertices[37] == 1.0f);
+        CHECK(mesh.vertices[38] == -1.0f);
     }
 
     TEST_CASE("Mesh init from file reads texture coordinate information correctly") {
         Mesh mesh = Mesh();
         mesh.initFromFile("media/models/cube.obj");
-        REQUIRE(mesh.texCoords.size() == 24);
+        REQUIRE(mesh.texCoords.size() == 48);
 
-        CHECK(mesh.texCoords[0].x == 0.625f);
-        CHECK(mesh.texCoords[0].y == 0.5f);
+        CHECK(mesh.texCoords[0] == 0.625f);
+        CHECK(mesh.texCoords[1] == 0.5f);
 
-        CHECK(mesh.texCoords[23].x == 0.375f);
-        CHECK(mesh.texCoords[23].y == 0.5f);
+        CHECK(mesh.texCoords[46] == 0.375f);
+        CHECK(mesh.texCoords[47] == 0.5f);
     }
 
     TEST_CASE("Mesh init from file reads texture coordinate information correctly") {
         Mesh mesh = Mesh();
         mesh.initFromFile("media/models/cube.obj");
-        REQUIRE(mesh.normals.size() == 6);
+        REQUIRE(mesh.normals.size() == 18);
 
-        CHECK(mesh.normals[0].x == 0.0f);
-        CHECK(mesh.normals[0].y == 1.0f);
-        CHECK(mesh.normals[0].z == 0.0f);
+        CHECK(mesh.normals[0] == 0.0f);
+        CHECK(mesh.normals[1] == 1.0f);
+        CHECK(mesh.normals[2] == 0.0f);
 
-        CHECK(mesh.normals[5].x == 0.0f);
-        CHECK(mesh.normals[5].y == 0.0f);
-        CHECK(mesh.normals[5].z == -1.0f);
+        CHECK(mesh.normals[15] == 0.0f);
+        CHECK(mesh.normals[16] == 0.0f);
+        CHECK(mesh.normals[17] == -1.0f);
     }
 
     TEST_CASE("Mesh init from file reads vertex index/face information correctly") {
         Mesh mesh = Mesh();
         mesh.initFromFile("media/models/cube.obj");
-        REQUIRE(mesh.indices.size() == 36);
+        REQUIRE(mesh.indices.size() == 108);
 
-        CHECK(mesh.indices[0].x == 2);
-        CHECK(mesh.indices[0].y == 1);
-        CHECK(mesh.indices[0].z == 1);
+        CHECK(mesh.indices[0] == 2);
+        CHECK(mesh.indices[1] == 1);
+        CHECK(mesh.indices[2] == 1);
 
-        CHECK(mesh.indices[1].x == 15);
-        CHECK(mesh.indices[1].y == 2);
-        CHECK(mesh.indices[1].z == 1);
+        CHECK(mesh.indices[3] == 15);
+        CHECK(mesh.indices[4] == 2);
+        CHECK(mesh.indices[5] == 1);
 
-        CHECK(mesh.indices[2].x == 21);
-        CHECK(mesh.indices[2].y == 3);
-        CHECK(mesh.indices[2].z == 1);
+        CHECK(mesh.indices[6] == 21);
+        CHECK(mesh.indices[7] == 3);
+        CHECK(mesh.indices[8] == 1);
 
-        CHECK(mesh.indices[33].x == 18);
-        CHECK(mesh.indices[33].y == 21);
-        CHECK(mesh.indices[33].z == 6);
+        CHECK(mesh.indices[99] == 18);
+        CHECK(mesh.indices[100] == 21);
+        CHECK(mesh.indices[101] == 6);
 
-        CHECK(mesh.indices[34].x == 1);
-        CHECK(mesh.indices[34].y == 23);
-        CHECK(mesh.indices[34].z == 6);
+        CHECK(mesh.indices[102] == 1);
+        CHECK(mesh.indices[103] == 23);
+        CHECK(mesh.indices[104] == 6);
 
-        CHECK(mesh.indices[35].x == 5);
-        CHECK(mesh.indices[35].y == 24);
-        CHECK(mesh.indices[35].z == 6);
+        CHECK(mesh.indices[105] == 5);
+        CHECK(mesh.indices[106] == 24);
+        CHECK(mesh.indices[107] == 6);
     }
 }

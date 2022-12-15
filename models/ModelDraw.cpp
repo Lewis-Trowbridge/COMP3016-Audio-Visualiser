@@ -1,15 +1,23 @@
 #include "ModelDraw.h"
 
-Mesh::Mesh(std::vector<glm::vec3> vertices, std::vector<glm::vec3> indices, std::vector<Texture> textures) {
-	this->vertices = vertices;
-	this->indices = indices;
-	this->textures = textures;
-}
-
 Mesh::Mesh() {
     VAO = 0;
     VBO = 0;
     EBO = 0;
+}
+
+void insertStringFloatsToGLfloatVector(std::string valueString, std::string delimiter, std::vector<GLfloat>* recipient) {
+    std::vector<std::string> values = splitString(valueString, delimiter);
+    for (int i = 0; i < values.size(); i++) {
+        recipient->push_back(stof(values[i]));
+    }
+}
+
+void insertStringFloatsToGLfloatVector(std::string valueString, std::string delimiter, std::vector<GLuint>* recipient) {
+    std::vector<std::string> values = splitString(valueString, delimiter);
+    for (int i = 0; i < values.size(); i++) {
+        recipient->push_back(stoul(values[i]));
+    }
 }
 
 glm::vec3 stringToVec3(std::string valueString, std::string delimiter) {
@@ -33,38 +41,38 @@ bool Mesh::initFromFile(std::string filename) {
         std::string stringValue;
 
         // Move the subposition to the first vertex
-        vertices.push_back(stringToVec3(reader.getElementAttribute("object", "vertex"), " "));
+        insertStringFloatsToGLfloatVector(reader.getElementAttribute("object", "vertex"), " ", &vertices);
         // Read the rest of the vertices
         while ((stringValue = reader.getNextElementAttribute("object", "vertex")) != "") {
-            vertices.push_back(stringToVec3(stringValue, " "));
+            insertStringFloatsToGLfloatVector(stringValue, " ", &vertices);
         }
 
         // Move the subposition to the first texcoord
-        texCoords.push_back(stringToVec2(reader.getElementAttribute("object", "vertex-texture"), " "));
+        insertStringFloatsToGLfloatVector(reader.getElementAttribute("object", "vertex-texture"), " ", &texCoords);
         // Read the rest of the texcoords
         while ((stringValue = reader.getNextElementAttribute("object", "vertex-texture")) != "") {
-            texCoords.push_back(stringToVec2(stringValue, " "));
+            insertStringFloatsToGLfloatVector(stringValue, " ", &texCoords);
         }
 
         // Move the subposition to the first normal
-        normals.push_back(stringToVec3(reader.getElementAttribute("object", "vertex-normal"), " "));
+        insertStringFloatsToGLfloatVector(reader.getElementAttribute("object", "vertex-normal"), " ", &normals);
         // Read the rest of the normal
         while ((stringValue = reader.getNextElementAttribute("object", "vertex-normal")) != "") {
-            normals.push_back(stringToVec3(stringValue, " "));
+            insertStringFloatsToGLfloatVector(stringValue, " ", &normals);
         }
 
         // Move the subposition to the first face
         std::vector<std::string> faceTriplets = splitString(reader.getElementAttribute("object", "face"), " ");
         for (int i = 0; i < faceTriplets.size(); i++)
         {
-            indices.push_back(stringToVec3(faceTriplets[i], "/"));
+            insertStringFloatsToGLfloatVector(faceTriplets[i], "/", &indices);
         }
         // Read the rest of the faces
         while ((stringValue = reader.getNextElementAttribute("object", "face")) != "") {
             std::vector<std::string> faceTriplets = splitString(stringValue, " ");
             for (int i = 0; i < faceTriplets.size(); i++)
             {
-                indices.push_back(stringToVec3(faceTriplets[i], "/"));
+                insertStringFloatsToGLfloatVector(faceTriplets[i], "/", &indices);
             }
         }
     } while (object != "");
@@ -81,21 +89,21 @@ void Mesh::setupMesh() {
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), &vertices[0], GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int),
         &indices[0], GL_STATIC_DRAW);
 
-    // vertex positions
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
-    // vertex normals
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
-    // vertex texture coords
-    glEnableVertexAttribArray(2);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoords));
+    //// vertex positions
+    //glEnableVertexAttribArray(0);
+    //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+    //// vertex normals
+    //glEnableVertexAttribArray(1);
+    //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
+    //// vertex texture coords
+    //glEnableVertexAttribArray(2);
+    //glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoords));
 
-    glBindVertexArray(0);
+    //glBindVertexArray(0);
 }
