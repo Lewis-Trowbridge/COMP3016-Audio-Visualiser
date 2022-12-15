@@ -20,16 +20,6 @@ void insertStringFloatsToGLfloatVector(std::string valueString, std::string deli
     }
 }
 
-glm::vec3 stringToVec3(std::string valueString, std::string delimiter) {
-    std::vector<std::string> values = splitString(valueString, delimiter);
-    return glm::vec3(stof(values[0]), stof(values[1]), stof(values[2]));
-}
-
-glm::vec2 stringToVec2(std::string valueString, std::string delimiter) {
-    std::vector<std::string> values = splitString(valueString, delimiter);
-    return glm::vec2(stof(values[0]), stof(values[1]));
-}
-
 bool Mesh::initFromFile(std::string filename) {
     FileReader reader = FileReader();
     if (!reader.openFile(filename)) {
@@ -92,18 +82,18 @@ void Mesh::setupMesh() {
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), &vertices[0], GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int),
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint),
         &indices[0], GL_STATIC_DRAW);
 
     //// vertex positions
-    //glEnableVertexAttribArray(0);
-    //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
     //// vertex normals
-    //glEnableVertexAttribArray(1);
-    //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
     //// vertex texture coords
-    //glEnableVertexAttribArray(2);
-    //glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoords));
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-    //glBindVertexArray(0);
+    glBindVertexArray(0);
 }
