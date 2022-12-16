@@ -1,9 +1,13 @@
 #include "ModelDraw.h"
 
-Mesh::Mesh() {
-    VAO = 0;
-    VBO = 0;
-    EBO = 0;
+Mesh::Mesh(unsigned int VAO, unsigned int VBO, unsigned int EBO) {
+    this->VAO = VAO;
+    this->VBO = VBO;
+    this->EBO = EBO;
+    this->vertices = std::vector<GLfloat>();
+    this->indices = std::vector<GLuint>();
+    this->texCoords = std::vector<GLfloat>();
+    this->normals = std::vector<GLfloat>();
 }
 
 void insertStringFloatsToGLfloatVector(std::string valueString, std::string delimiter, std::vector<GLfloat>* recipient) {
@@ -96,4 +100,13 @@ void Mesh::setupMesh() {
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
     glBindVertexArray(0);
+}
+
+Mesh* Drawer::create() {
+    // Work out what the new OpenGL indexes should be
+    size_t newIndex = assignedMeshes.size();
+    size_t openGLIndex = newIndex * 3;
+    Mesh newMesh = Mesh(openGLIndex + 1, openGLIndex + 2, openGLIndex + 3);
+    assignedMeshes.push_back(newMesh);
+    return &assignedMeshes[newIndex];
 }

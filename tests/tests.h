@@ -38,9 +38,21 @@ TEST_SUITE("AudioProvider") {
     }
 }
 
+TEST_SUITE("Drawer") {
+    TEST_CASE("Drawer create returns valid new Mesh") {
+        Drawer drawer = Drawer();
+        Mesh mesh = *drawer.create();
+        CHECK(mesh.vertices.size() == 0);
+        CHECK(mesh.indices.size() == 0);
+        CHECK(mesh.texCoords.size() == 0);
+        CHECK(mesh.normals.size() == 0);
+    }
+}
+
 TEST_SUITE("Mesh") {
     TEST_CASE("Mesh init from file reads vertex information correctly") {
-        Mesh mesh = Mesh();
+        Drawer drawer = Drawer();
+        Mesh mesh = *drawer.create();
         mesh.initFromFile("media/models/cube.obj");
         REQUIRE(mesh.vertices.size() == 72);
 
@@ -54,7 +66,8 @@ TEST_SUITE("Mesh") {
     }
 
     TEST_CASE("Mesh init from file reads texture coordinate information correctly") {
-        Mesh mesh = Mesh();
+        Drawer drawer = Drawer();
+        Mesh mesh = *drawer.create();
         mesh.initFromFile("media/models/cube.obj");
         REQUIRE(mesh.texCoords.size() == 48);
 
@@ -66,7 +79,8 @@ TEST_SUITE("Mesh") {
     }
 
     TEST_CASE("Mesh init from file reads texture coordinate information correctly") {
-        Mesh mesh = Mesh();
+        Drawer drawer = Drawer();
+        Mesh mesh = *drawer.create();
         mesh.initFromFile("media/models/cube.obj");
         REQUIRE(mesh.normals.size() == 18);
 
@@ -80,7 +94,8 @@ TEST_SUITE("Mesh") {
     }
 
     TEST_CASE("Mesh init from file reads vertex index/face information correctly") {
-        Mesh mesh = Mesh();
+        Drawer drawer = Drawer();
+        Mesh mesh = *drawer.create();
         mesh.initFromFile("media/models/cube.obj");
         REQUIRE(mesh.indices.size() == 108);
 

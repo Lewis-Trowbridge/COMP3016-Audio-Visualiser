@@ -14,14 +14,21 @@ public:
     std::vector<GLfloat> texCoords;
     std::vector<GLfloat> normals;
 
-    Mesh();
+    Mesh(unsigned int VAO, unsigned int VBO, unsigned int EBO);
     bool initFromFile(std::string filename);
-    void Draw();
+    void setupMesh();
+    void draw();
 private:
     //  render data
     unsigned int VAO, VBO, EBO;
+};
 
-    void setupMesh();
+class Drawer {
+public:
+    Mesh* create();
+    void draw();
+private:
+    std::vector<Mesh> assignedMeshes;
 };
 
 
