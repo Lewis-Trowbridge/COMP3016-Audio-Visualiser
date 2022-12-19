@@ -6,6 +6,15 @@
 #include "FileReader.h"
 #include "../utils/utils.h"
 
+
+struct Indexes {
+public:
+    GLuint vertices;
+    GLuint indices;
+    GLuint texCoords;
+    GLuint normals;
+};
+
 class Mesh {
 public:
     // mesh data
@@ -13,6 +22,8 @@ public:
     std::vector<GLuint> indices;
     std::vector<GLfloat> texCoords;
     std::vector<GLfloat> normals;
+    Indexes bufferIndices;
+    Indexes pointerIndices;
 
     Mesh(unsigned int VAO, unsigned int VBO, unsigned int EBO);
     bool initFromFile(std::string filename);
@@ -26,9 +37,12 @@ private:
 class Drawer {
 public:
     Mesh* create();
+    void setup();
     void draw();
 private:
     std::vector<Mesh> assignedMeshes;
+    unsigned int VAO, VBO, EBO;
+    std::vector<GLuint> VAOs;
 };
 
 
