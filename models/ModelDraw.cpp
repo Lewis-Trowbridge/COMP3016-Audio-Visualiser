@@ -1,10 +1,12 @@
 #include "ModelDraw.h"
 
 GLfloat  colours[][4] = {
-        { 1.0f, 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 1.0f, 1.0f },
-        { 1.0f, 1.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 0.0f, 1.0f },
-        { 0.0f, 0.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 0.0f, 1.0f },
+        { 1.0f, 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 0.0f, 1.0f },
+        { 1.0f, 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 0.0f, 1.0f },
+        { 1.0f, 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 0.0f, 1.0f },
 };
+
+enum Attrib_IDs { vPosition = 0, cPosition = 1, tPosition = 2 };
 
 Mesh::Mesh(unsigned int VAO, unsigned int VBO, unsigned int EBO) {
     this->VAO = VAO;
@@ -26,7 +28,7 @@ void insertStringFloatsToGLfloatVector(std::string valueString, std::string deli
 void insertStringFloatsToGLfloatVector(std::string valueString, std::string delimiter, std::vector<GLuint>* recipient) {
     std::vector<std::string> values = splitString(valueString, delimiter);
     for (int i = 0; i < values.size(); i++) {
-        recipient->push_back(stoul(values[i]) -1);
+        recipient->push_back(stoul(values[i]));
     }
 }
 
@@ -111,12 +113,13 @@ void Mesh::setupMesh() {
 Mesh* Drawer::create() {
     // Work out what the new OpenGL indexes should be
     size_t newIndex = assignedMeshes.size();
-    size_t openGLIndex = newIndex * 4;
+    size_t openGLIndex = newIndex * 5;
     Mesh newMesh = Mesh(openGLIndex + 1, openGLIndex + 2, openGLIndex + 3);
     newMesh.pointerIndices.vertices = openGLIndex;
     newMesh.pointerIndices.indices = openGLIndex + 1;
     newMesh.pointerIndices.texCoords = openGLIndex + 2;
     newMesh.pointerIndices.normals = openGLIndex + 3;
+    newMesh.pointerIndices.colours = openGLIndex + 4;
     assignedMeshes.push_back(newMesh);
     return &assignedMeshes[newIndex];
 }
@@ -143,18 +146,27 @@ void Drawer::setup() {
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, meshToDraw.indices.size() * sizeof(GLuint),
             meshToDraw.indices.data(), GL_STATIC_DRAW);
 
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+        glVertexAttribPointer(vPosition, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+        // Prepare colours data
+        glGenBuffers(1, &meshToDraw.bufferIndices.colours);
+        glBindBuffer(GL_ARRAY_BUFFER, meshToDraw.bufferIndices.colours);
+        glBufferStorage(GL_ARRAY_BUFFER, sizeof(colours), colours, 0);
+
+        glVertexAttribPointer(cPosition, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
         // Prepare tex coords data
-        //glGenBuffers(1, &meshToDraw.bufferIndices.texCoords);
-        //glBindBuffer(GL_ARRAY_BUFFER, meshToDraw.bufferIndices.texCoords);
-        //glBufferData(GL_ARRAY_BUFFER, meshToDraw.texCoords.size() * sizeof(GLfloat),
-        //    meshToDraw.texCoords.data(), GL_STATIC_DRAW);
+        glGenBuffers(1, &meshToDraw.bufferIndices.texCoords);
+        glBindBuffer(GL_ARRAY_BUFFER, meshToDraw.bufferIndices.texCoords);
+        glBufferData(GL_ARRAY_BUFFER, meshToDraw.texCoords.size() * sizeof(GLfloat),
+            meshToDraw.texCoords.data(), GL_STATIC_DRAW);
 
-        //glVertexAttribPointer(meshToDraw.pointerIndices.texCoords, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+        glVertexAttribPointer(tPosition, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-        glEnableVertexAttribArray(0);
-        //glEnableVertexAttribArray(meshToDraw.pointerIndices.texCoords);
+        // Enable all VBOs
+        glEnableVertexAttribArray(vPosition);
+        glEnableVertexAttribArray(cPosition);
+        glEnableVertexAttribArray(tPosition);
         //glBindVertexArray(0);
     }
 }
@@ -162,9 +174,9 @@ void Drawer::setup() {
 void Drawer::draw() {
     for (size_t i = 0; i < VAOs.size(); i++)
     {
-        size_t numVertices = assignedMeshes[i].indices.size() / 3;
+        size_t numVertices = assignedMeshes[i].indices.size();
         glBindVertexArray(VAOs[i]);
-        //glBindTexture(GL_TEXTURE_2D, 1);
+        glBindTexture(GL_TEXTURE_2D, 1);
         glDrawElements(GL_TRIANGLES, numVertices, GL_UNSIGNED_INT, 0);
     }
 }

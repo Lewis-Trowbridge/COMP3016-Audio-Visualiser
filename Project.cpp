@@ -54,8 +54,8 @@ init(void)
 		{ GL_NONE, NULL }
 	};
 
-	/*GLuint program = LoadShaders(shaders);
-	glUseProgram(program);*/
+	GLuint program = LoadShaders(shaders);
+	glUseProgram(program);
 
 	/*glGenVertexArrays(NumVAOs, VAOs);
 	glBindVertexArray(VAOs[0]);*/
@@ -188,8 +188,8 @@ init(void)
 	//glVertexAttribPointer(cPosition, 4, GL_FLOAT,
 	//GL_FALSE, 0, BUFFER_OFFSET(0));
 
-	//loadTexture(texture1, "media/textures/awesomeface.png");
-	//glUniform1i(glGetUniformLocation(program, "texture1"), 0);
+	loadTexture(texture1, "media/textures/awesomeface.png");
+	glUniform1i(glGetUniformLocation(program, "texture1"), 0);
 
 
 
@@ -211,8 +211,8 @@ init(void)
 
 
 	//adding the Uniform to the shader
-	//int mvpLoc = glGetUniformLocation(program, "mvp");
-	//glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(model));
+	int mvpLoc = glGetUniformLocation(program, "mvp");
+	glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(model));
 
 	/*glEnableVertexAttribArray(vPosition);
 	glEnableVertexAttribArray(cPosition);
@@ -261,13 +261,13 @@ display(void)
 {
 	static const float black[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
-	//glClearBufferfv(GL_COLOR, 0, black);
-	//glClear(GL_COLOR_BUFFER_BIT);
+	glClearBufferfv(GL_COLOR, 0, black);
+	glClear(GL_COLOR_BUFFER_BIT);
 	//// bind textures on corresponding texture units
-	//glFrontFace(GL_CW);
-	//glCullFace(GL_BACK);
-	//glEnable(GL_CULL_FACE);
-	drawer.draw();
+	glFrontFace(GL_CW);
+	glCullFace(GL_BACK);
+	glEnable(GL_CULL_FACE);
+	drawer.draw(); 
 
 	//modify position using mv & p
 //	glBindVertexArray(VAOs[0]);
@@ -308,7 +308,7 @@ main(int argc, char** argv)
 	while (!glfwWindowShouldClose(window))
 	{
 		// uncomment to draw only wireframe 
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 		display();
 		glfwSwapBuffers(window);

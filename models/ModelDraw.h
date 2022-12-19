@@ -13,6 +13,7 @@ public:
     GLuint indices;
     GLuint texCoords;
     GLuint normals;
+    GLuint colours;
 };
 
 class Mesh {
@@ -22,6 +23,7 @@ public:
     std::vector<GLuint> indices;
     std::vector<GLfloat> texCoords;
     std::vector<GLfloat> normals;
+    std::vector<GLfloat> colours;
     Indexes bufferIndices;
     Indexes pointerIndices;
 
