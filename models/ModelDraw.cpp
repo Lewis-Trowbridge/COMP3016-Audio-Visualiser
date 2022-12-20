@@ -1,3 +1,5 @@
+#define STB_IMAGE_IMPLEMENTATION
+#include "../stb_image.h"
 #include "ModelDraw.h"
 
 GLfloat  colours[][4] = {
@@ -122,6 +124,41 @@ void Mesh::draw() {
     glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, 0);
 }
 
+void Drawer::loadTexture(std::string texturePath) {
+    GLuint texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    // set the texture wrapping parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // set texture filtering parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // load image, create texture and generate mipmaps
+    GLint width, height, nrChannels;
+    stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
+    unsigned char* data = stbi_load(texturePath.c_str(), &width, &height, &nrChannels, 0);
+    if (data)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+        textures.push_back(texture);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data);
+}
+
+Drawer::Drawer() {
+    // creating the view matrix
+    view = glm::mat4(1.0f);
+    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -4.0f));
+
+    // creating the projection matrix
+    projection = glm::perspective(45.0f, 4.0f / 3, 0.1f, 20.0f);
+}
 Mesh* Drawer::create() {
     size_t newIndex = assignedMeshes.size();
     Mesh newMesh = Mesh();
@@ -130,10 +167,30 @@ Mesh* Drawer::create() {
 }
 
 void Drawer::setup() {
+
+    ShaderInfo  shaders[] =
+    {
+        { GL_VERTEX_SHADER, "media/triangles.vert" },
+        { GL_FRAGMENT_SHADER, "media/triangles.frag" },
+        { GL_NONE, NULL }
+    };
+
+    program = LoadShaders(shaders);
+    glUseProgram(program);
+
     for (size_t i = 0; i < assignedMeshes.size(); i++)
     {
         assignedMeshes[i].setupMesh();
     }
+    loadTexture("media/textures/awesomeface.png");
+    glUniform1i(glGetUniformLocation(program, "texture1"), textures[0]);
+
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+
+    //adding the Uniform to the shader
+    int mvpLoc = glGetUniformLocation(program, "mvp");
+    glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(model));
 }
 
 void Drawer::draw() {
