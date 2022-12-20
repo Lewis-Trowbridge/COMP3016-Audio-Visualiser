@@ -73,11 +73,11 @@ bool Mesh::initFromFile(std::string filename) {
     return true;
 }
 
-void Mesh::setupMesh(GLuint vaoIndex) {
-    this->vaoIndex = vaoIndex;
+void Mesh::setupMesh() {
+    glGenVertexArrays(1, &vaoIndex);
 
     // Point to VAO for this mesh
-    glBindVertexArray(this->vaoIndex);
+    glBindVertexArray(vaoIndex);
 
     // Prepare vertex data
     glGenBuffers(1, &bufferIndices.vertices);
@@ -130,11 +130,9 @@ Mesh* Drawer::create() {
 }
 
 void Drawer::setup() {
-    VAOs.resize(assignedMeshes.size());
-    glGenVertexArrays(assignedMeshes.size(), VAOs.data());
     for (size_t i = 0; i < assignedMeshes.size(); i++)
     {
-        assignedMeshes[i].setupMesh(VAOs[i]);
+        assignedMeshes[i].setupMesh();
     }
 }
 

@@ -28,8 +28,10 @@ public:
     Indexes bufferIndices;
     size_t numIndices;
 
+    glm::mat4 model;
+
     bool initFromFile(std::string filename);
-    void setupMesh(GLuint vaoIndex);
+    void setupMesh();
     void draw();
 };
 
@@ -38,9 +40,11 @@ public:
     Mesh* create();
     void setup();
     void draw();
+
+    glm::mat4 view;
+    glm::mat4 projection;
 private:
     std::vector<Mesh> assignedMeshes;
-    std::vector<GLuint> VAOs;
 };
 
 
