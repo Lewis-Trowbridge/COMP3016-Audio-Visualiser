@@ -23,17 +23,14 @@ public:
     std::vector<GLuint> indices;
     std::vector<GLfloat> texCoords;
     std::vector<GLfloat> normals;
-    std::vector<GLfloat> colours;
+    //std::vector<GLfloat> colours;
+    GLuint vaoIndex;
     Indexes bufferIndices;
-    Indexes pointerIndices;
+    size_t numIndices;
 
-    Mesh(unsigned int VAO, unsigned int VBO, unsigned int EBO);
     bool initFromFile(std::string filename);
-    void setupMesh();
+    void setupMesh(GLuint vaoIndex);
     void draw();
-private:
-    //  render data
-    unsigned int VAO, VBO, EBO;
 };
 
 class Drawer {
@@ -43,7 +40,6 @@ public:
     void draw();
 private:
     std::vector<Mesh> assignedMeshes;
-    unsigned int VAO, VBO, EBO;
     std::vector<GLuint> VAOs;
 };
 
