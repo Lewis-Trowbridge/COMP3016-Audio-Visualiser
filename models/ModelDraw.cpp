@@ -27,8 +27,8 @@ void insertStringFloatsToGLfloatVector(std::string valueString, std::string deli
 
 void insertStringFloatsToGLfloatVector(std::string valueString, std::string delimiter, std::vector<GLuint>* recipient) {
     std::vector<std::string> values = splitString(valueString, delimiter);
-    for (int i = 0; i < values.size(); i++) {
-        recipient->push_back(stoul(values[i]));
+    for (int i = 0; i < values.size(); i+=3) {
+        recipient->push_back(stoul(values[i]) -1);
     }
 }
 
