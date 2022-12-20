@@ -55,8 +55,8 @@ display(void)
 
 	glClearBufferfv(GL_COLOR, 0, black);
 	glClear(GL_COLOR_BUFFER_BIT);
-	//// bind textures on corresponding texture units
-	glFrontFace(GL_CW);
+	//// Ensure faces are correctly culled
+	glFrontFace(GL_CCW);
 	glCullFace(GL_BACK);
 	glEnable(GL_CULL_FACE);
 	drawer.draw(); 

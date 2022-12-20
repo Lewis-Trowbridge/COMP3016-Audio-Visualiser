@@ -187,10 +187,13 @@ void Drawer::setup() {
 
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+    model = glm::rotate(model, glm::radians(-40.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    model = glm::translate(model, glm::vec3(0.0f, 0.0f, -1.0f));
+    glm::mat4 mvp = projection * view * model;
 
     //adding the Uniform to the shader
     int mvpLoc = glGetUniformLocation(program, "mvp");
-    glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(model));
+    glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(mvp));
 }
 
 void Drawer::draw() {
