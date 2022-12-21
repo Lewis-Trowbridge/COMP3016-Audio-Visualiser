@@ -10,7 +10,7 @@ find_package(glm CONFIG REQUIRED)
 find_package(tinyfiledialogs REQUIRED)
 find_package(mpg123 CONFIG REQUIRED)
 
-add_executable(visualiser Project.cpp Project.h LoadShaders.cpp LoadShaders.h stb_image.h tests/doctest.h tests/tests.h "AudioProvider.h" "AudioProvider.cpp")
+add_executable(visualiser Project.cpp Project.h LoadShaders.cpp LoadShaders.h stb_image.h tests/doctest.h tests/tests.h "AudioProvider.h" "AudioProvider.cpp" models/FileReader.h models/FileReader.cpp "models/ModelDraw.h" "models/ModelDraw.cpp" "utils/utils.h" "utils/utils.cpp")
 add_custom_target(copy_assets
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_LIST_DIR}/media ${CMAKE_CURRENT_BINARY_DIR}/media
 )
