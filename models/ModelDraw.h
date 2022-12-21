@@ -32,11 +32,13 @@ public:
     Indexes bufferIndices;
     size_t numIndices;
 
-    glm::mat4 model;
+    glm::mat4 modelMatrix;
 
+    Mesh();
     bool initFromFile(std::string filename);
     void setupMesh();
     void draw();
+    void translate(GLfloat x, GLfloat y, GLfloat z);
 };
 
 class Drawer {

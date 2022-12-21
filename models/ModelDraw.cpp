@@ -24,6 +24,12 @@ void insertStringValuesToGLVector(std::string valueString, std::string delimiter
     }
 }
 
+Mesh::Mesh() {
+    modelMatrix = glm::mat4(1.0f);
+    modelMatrix = glm::scale(modelMatrix, glm::vec3(0.5f, 0.5f, 0.5f));
+    modelMatrix = glm::rotate(modelMatrix, glm::radians(-40.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+}
+
 bool Mesh::initFromFile(std::string filename) {
     FileReader reader = FileReader();
     if (!reader.openFile(filename)) {
@@ -124,6 +130,10 @@ void Mesh::draw() {
     glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, 0);
 }
 
+void Mesh::translate(GLfloat x, GLfloat y, GLfloat z) {
+    modelMatrix = glm::translate(modelMatrix, glm::vec3(x, y, z));
+}
+
 void Drawer::loadTexture(std::string texturePath) {
     GLuint texture;
     glGenTextures(1, &texture);
@@ -184,21 +194,17 @@ void Drawer::setup() {
     }
     loadTexture("media/textures/awesomeface.png");
     glUniform1i(glGetUniformLocation(program, "texture1"), textures[0]);
-
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
-    model = glm::rotate(model, glm::radians(-40.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    model = glm::translate(model, glm::vec3(0.0f, 0.0f, -1.0f));
-    glm::mat4 mvp = projection * view * model;
-
-    //adding the Uniform to the shader
-    int mvpLoc = glGetUniformLocation(program, "mvp");
-    glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(mvp));
 }
 
 void Drawer::draw() {
     for (size_t i = 0; i < assignedMeshes.size(); i++)
     {
-        assignedMeshes[i].draw();
+        Mesh mesh = assignedMeshes[i];
+        glm::mat4 mvp = projection * view * mesh.modelMatrix;
+
+        int mvpLoc = glGetUniformLocation(program, "mvp");
+        glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(mvp));
+
+        mesh.draw();
     }
 }

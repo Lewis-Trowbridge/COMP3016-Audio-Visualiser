@@ -38,6 +38,10 @@ init(void)
 {
 	Mesh* mesh = drawer.create();
 	mesh->initFromFile("media/models/cube.obj");
+	mesh->translate(-4.0f, 0.0f, 0.0f);
+	Mesh* mesh2 = drawer.create();
+	mesh2->initFromFile("media/models/cube.obj");
+	mesh2->translate(4.0f, 0.0f, 0.0f);
 	drawer.setup();
 }
 
