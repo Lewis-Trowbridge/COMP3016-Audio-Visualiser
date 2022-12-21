@@ -7,6 +7,7 @@
 #include <string>
 #include "../Project.h" 
 #include "../AudioProvider.h"
+#include "../FrequencyProvider.h"
 //#define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "doctest.h"
@@ -34,5 +35,35 @@ TEST_SUITE("AudioProvider") {
         AudioProvider provider = AudioProvider();
         std::vector<float> actual = provider.getFrame();
         CHECK(actual.size() == 0);
+    }
+}
+
+TEST_SUITE("FrequencyProvider") {
+    TEST_CASE("FrequencyProvider gets a given number of frequency buckets for a given MP3 frame") {
+        // TODO: Replace this with some sample data
+        AudioProvider audioProvider = AudioProvider();
+        audioProvider.openFile("media/audio/tone.mp3");
+        std::vector<float> actual = audioProvider.getFrame();
+        actual = audioProvider.getFrame();
+        actual = audioProvider.getFrame();
+        actual = audioProvider.getFrame();
+        actual = audioProvider.getFrame();
+        actual = audioProvider.getFrame();
+        actual = audioProvider.getFrame();
+        actual = audioProvider.getFrame();
+        actual = audioProvider.getFrame();
+        actual = audioProvider.getFrame();
+        actual = audioProvider.getFrame();
+        actual = audioProvider.getFrame();
+        actual = audioProvider.getFrame();
+        actual = audioProvider.getFrame();
+        actual = audioProvider.getFrame();
+
+        FrequencyProvider provider = FrequencyProvider();
+        
+        size_t buckets = 16;
+
+        std::vector<float> result = provider.getFrequencies(&actual, buckets);
+        REQUIRE(result.size() == buckets);
     }
 }

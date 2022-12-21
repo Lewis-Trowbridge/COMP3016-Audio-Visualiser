@@ -9,6 +9,6 @@
     "glm",
     "tinyfiledialogs",
     "mpg123",
-    "fftwpp"
+    "kissfft"
   ]
 }

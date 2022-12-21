@@ -1,9 +1,9 @@
 #pragma once
 #include <vector>
-#include <fftwpp/fftw++.h>
+#include <algorithm>
+#include <kissfft.hh>
 
 class FrequencyProvider {
 public:
-	FrequencyProvider();
-	std::vector<int> getFrequencies(size_t size);
+	std::vector<float> getFrequencies(std::vector<float>* data, size_t buckets);
 };
