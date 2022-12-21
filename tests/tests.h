@@ -97,30 +97,30 @@ TEST_SUITE("Mesh") {
         Drawer drawer = Drawer();
         Mesh mesh = *drawer.create();
         mesh.initFromFile("media/models/cube.obj");
-        REQUIRE(mesh.indices.size() == 108);
+        REQUIRE(mesh.indices.size() == 36);
 
-        CHECK(mesh.indices[0] == 2);
-        CHECK(mesh.indices[1] == 1);
-        CHECK(mesh.indices[2] == 1);
+        CHECK(mesh.indices[0] == 1);
+        CHECK(mesh.indices[1] == 14);
+        CHECK(mesh.indices[2] == 20);
 
-        CHECK(mesh.indices[3] == 15);
-        CHECK(mesh.indices[4] == 2);
-        CHECK(mesh.indices[5] == 1);
+        CHECK(mesh.indices[3] == 1);
+        CHECK(mesh.indices[4] == 20);
+        CHECK(mesh.indices[5] == 7);
 
-        CHECK(mesh.indices[6] == 21);
-        CHECK(mesh.indices[7] == 3);
-        CHECK(mesh.indices[8] == 1);
+        CHECK(mesh.indices[6] == 10);
+        CHECK(mesh.indices[7] == 6);
+        CHECK(mesh.indices[8] == 19);
 
-        CHECK(mesh.indices[99] == 18);
-        CHECK(mesh.indices[100] == 21);
-        CHECK(mesh.indices[101] == 6);
+        CHECK(mesh.indices[27] == 5);
+        CHECK(mesh.indices[28] == 8);
+        CHECK(mesh.indices[29] == 11);
 
-        CHECK(mesh.indices[102] == 1);
-        CHECK(mesh.indices[103] == 23);
-        CHECK(mesh.indices[104] == 6);
+        CHECK(mesh.indices[30] == 17);
+        CHECK(mesh.indices[31] == 13);
+        CHECK(mesh.indices[32] == 0);
 
-        CHECK(mesh.indices[105] == 5);
-        CHECK(mesh.indices[106] == 24);
-        CHECK(mesh.indices[107] == 6);
+        CHECK(mesh.indices[33] == 17);
+        CHECK(mesh.indices[34] == 0);
+        CHECK(mesh.indices[35] == 4);
     }
 }
