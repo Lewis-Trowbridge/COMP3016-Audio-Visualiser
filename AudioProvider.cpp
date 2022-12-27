@@ -41,3 +41,7 @@ std::vector<float> AudioProvider::getFrame() {
 	}
 	return mp3Data;
 }
+
+double AudioProvider::getLengthOfFrameInSeconds() {
+	return mpg123_tpf(handle);
+}

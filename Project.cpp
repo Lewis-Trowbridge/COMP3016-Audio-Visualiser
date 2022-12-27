@@ -4,13 +4,14 @@
 
 #include <iostream>
 #include<vector>
+#include <chrono>
+#include <thread>
 
 #include "Project.h"
 
 GLuint texture1;
 
-Drawer drawer = Drawer();
-
+Orchestrator orchestrator = Orchestrator(16);
 //----------------------------------------------------------------------------
 //
 // init
@@ -21,13 +22,8 @@ Drawer drawer = Drawer();
 void
 init(void)
 {
-	Mesh* mesh = drawer.create();
-	mesh->initFromFile("media/models/cube.obj");
-	mesh->translate(-4.0f, 0.0f, 0.0f);
-	Mesh* mesh2 = drawer.create();
-	mesh2->initFromFile("media/models/cube.obj");
-	mesh2->translate(4.0f, 0.0f, 0.0f);
-	drawer.setup();
+	orchestrator.createCubesInCircle();
+	orchestrator.openAudioFile("media/audio/tone.mp3");
 }
 
 
@@ -43,12 +39,15 @@ display(void)
 	static const float black[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 	glClearBufferfv(GL_COLOR, 0, black);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//// Ensure faces are correctly culled
 	glFrontFace(GL_CCW);
 	glCullFace(GL_BACK);
 	glEnable(GL_CULL_FACE);
-	drawer.draw(); 
+	// Ensure that item depth appears correctly
+	glEnable(GL_DEPTH_TEST);
+	orchestrator.playAudioFrame();
+	orchestrator.drawer.draw();
 }
 
 int
@@ -65,7 +64,7 @@ main(int argc, char** argv)
 
 	glfwInit();
 
-	GLFWwindow* window = glfwCreateWindow(800, 600, "Textured Cube", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(800, 600, "Visualiser", NULL, NULL);
 
 	glfwMakeContextCurrent(window);
 	glewInit();
@@ -80,6 +79,7 @@ main(int argc, char** argv)
 		display();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+		std::this_thread::sleep_for(std::chrono::duration<double>(orchestrator.audioSecondsLength));
 	}
 
 	glfwDestroyWindow(window);

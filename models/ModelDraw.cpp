@@ -27,7 +27,6 @@ void insertStringValuesToGLVector(std::string valueString, std::string delimiter
 Mesh::Mesh() {
     modelMatrix = glm::mat4(1.0f);
     modelMatrix = glm::scale(modelMatrix, glm::vec3(0.5f, 0.5f, 0.5f));
-    modelMatrix = glm::rotate(modelMatrix, glm::radians(-40.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 }
 
 bool Mesh::initFromFile(std::string filename) {
@@ -134,6 +133,18 @@ void Mesh::translate(GLfloat x, GLfloat y, GLfloat z) {
     modelMatrix = glm::translate(modelMatrix, glm::vec3(x, y, z));
 }
 
+void Mesh::scale(GLfloat x, GLfloat y, GLfloat z, bool saved) {
+    modelMatrix = saved ? glm::scale(savedModelMatrix, glm::vec3(x, y, z)) : glm::scale(modelMatrix, glm::vec3(x, y, z));
+}
+
+void Mesh::rotate(GLfloat angle, GLfloat x, GLfloat y, GLfloat z) {
+    modelMatrix = glm::rotate(modelMatrix, glm::radians(angle), glm::vec3(x, y, z));
+}
+
+void Mesh::saveMatrix() {
+    savedModelMatrix = modelMatrix;
+}
+
 void Drawer::loadTexture(std::string texturePath) {
     GLuint texture;
     glGenTextures(1, &texture);
@@ -164,7 +175,7 @@ void Drawer::loadTexture(std::string texturePath) {
 Drawer::Drawer() {
     // creating the view matrix
     view = glm::mat4(1.0f);
-    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -4.0f));
+    view = glm::translate(view, glm::vec3(0.0f, -3.0f, -10.0f));
 
     // creating the projection matrix
     projection = glm::perspective(45.0f, 4.0f / 3, 0.1f, 20.0f);
@@ -207,4 +218,8 @@ void Drawer::draw() {
 
         mesh.draw();
     }
+}
+
+void Drawer::verticallyScaleMesh(size_t meshNumber, GLfloat value) {
+    assignedMeshes[meshNumber].scale(1.0f, value, 1.0f, true);
 }
