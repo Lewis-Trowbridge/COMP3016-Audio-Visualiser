@@ -39,7 +39,11 @@ public:
     void setupMesh();
     void draw();
     void translate(GLfloat x, GLfloat y, GLfloat z);
+    void scale(GLfloat x, GLfloat y, GLfloat z, bool saved);
     void rotate(GLfloat angle, GLfloat x, GLfloat y, GLfloat z);
+    void saveMatrix();
+private:
+    glm::mat4 savedModelMatrix;
 };
 
 class Drawer {
@@ -49,6 +53,7 @@ public:
     void setup();
     void draw();
     void loadTexture(std::string texturePath);
+    void verticallyScaleMesh(size_t meshNumber, GLfloat value);
 
     glm::mat4 view;
     glm::mat4 projection;

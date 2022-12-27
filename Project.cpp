@@ -4,12 +4,14 @@
 
 #include <iostream>
 #include<vector>
+#include <chrono>
+#include <thread>
 
 #include "Project.h"
 
 GLuint texture1;
 
-Orchestrator orchestrator = Orchestrator();
+Orchestrator orchestrator = Orchestrator(16);
 //----------------------------------------------------------------------------
 //
 // init
@@ -20,7 +22,8 @@ Orchestrator orchestrator = Orchestrator();
 void
 init(void)
 {
-	orchestrator.createCubesInCircle(16);
+	orchestrator.createCubesInCircle();
+	orchestrator.openAudioFile("media/audio/tone.mp3");
 }
 
 
@@ -43,6 +46,7 @@ display(void)
 	glEnable(GL_CULL_FACE);
 	// Ensure that item depth appears correctly
 	glEnable(GL_DEPTH_TEST);
+	orchestrator.playAudioFrame();
 	orchestrator.drawer.draw();
 }
 
@@ -75,6 +79,7 @@ main(int argc, char** argv)
 		display();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+		std::this_thread::sleep_for(std::chrono::duration<double>(orchestrator.audioSecondsLength));
 	}
 
 	glfwDestroyWindow(window);

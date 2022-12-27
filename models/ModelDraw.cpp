@@ -133,8 +133,16 @@ void Mesh::translate(GLfloat x, GLfloat y, GLfloat z) {
     modelMatrix = glm::translate(modelMatrix, glm::vec3(x, y, z));
 }
 
+void Mesh::scale(GLfloat x, GLfloat y, GLfloat z, bool saved) {
+    modelMatrix = saved ? glm::scale(savedModelMatrix, glm::vec3(x, y, z)) : glm::scale(modelMatrix, glm::vec3(x, y, z));
+}
+
 void Mesh::rotate(GLfloat angle, GLfloat x, GLfloat y, GLfloat z) {
     modelMatrix = glm::rotate(modelMatrix, glm::radians(angle), glm::vec3(x, y, z));
+}
+
+void Mesh::saveMatrix() {
+    savedModelMatrix = modelMatrix;
 }
 
 void Drawer::loadTexture(std::string texturePath) {
@@ -210,4 +218,8 @@ void Drawer::draw() {
 
         mesh.draw();
     }
+}
+
+void Drawer::verticallyScaleMesh(size_t meshNumber, GLfloat value) {
+    assignedMeshes[meshNumber].scale(1.0f, value, 1.0f, true);
 }
