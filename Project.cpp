@@ -9,8 +9,7 @@
 
 GLuint texture1;
 
-Drawer drawer = Drawer();
-
+Orchestrator orchestrator = Orchestrator();
 //----------------------------------------------------------------------------
 //
 // init
@@ -21,13 +20,7 @@ Drawer drawer = Drawer();
 void
 init(void)
 {
-	Mesh* mesh = drawer.create();
-	mesh->initFromFile("media/models/cube.obj");
-	mesh->translate(-4.0f, 0.0f, 0.0f);
-	Mesh* mesh2 = drawer.create();
-	mesh2->initFromFile("media/models/cube.obj");
-	mesh2->translate(4.0f, 0.0f, 0.0f);
-	drawer.setup();
+	orchestrator.createCubesInCircle(16);
 }
 
 
@@ -43,12 +36,14 @@ display(void)
 	static const float black[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 	glClearBufferfv(GL_COLOR, 0, black);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//// Ensure faces are correctly culled
 	glFrontFace(GL_CCW);
 	glCullFace(GL_BACK);
 	glEnable(GL_CULL_FACE);
-	drawer.draw(); 
+	// Ensure that item depth appears correctly
+	glEnable(GL_DEPTH_TEST);
+	orchestrator.drawer.draw();
 }
 
 int
