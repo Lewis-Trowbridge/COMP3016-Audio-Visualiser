@@ -39,6 +39,7 @@ public:
     void setupMesh();
     void draw();
     void translate(GLfloat x, GLfloat y, GLfloat z);
+    void rotate(GLfloat angle, GLfloat x, GLfloat y, GLfloat z);
 };
 
 class Drawer {

@@ -133,6 +133,10 @@ void Mesh::translate(GLfloat x, GLfloat y, GLfloat z) {
     modelMatrix = glm::translate(modelMatrix, glm::vec3(x, y, z));
 }
 
+void Mesh::rotate(GLfloat angle, GLfloat x, GLfloat y, GLfloat z) {
+    modelMatrix = glm::rotate(modelMatrix, glm::radians(angle), glm::vec3(x, y, z));
+}
+
 void Drawer::loadTexture(std::string texturePath) {
     GLuint texture;
     glGenTextures(1, &texture);

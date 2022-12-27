@@ -1,6 +1,6 @@
 #include "Orchestrator.h"
 
-const int radius = 10;
+const GLint radius = 10;
 
 Orchestrator::Orchestrator() {
 	drawer = Drawer();
@@ -13,15 +13,15 @@ void Orchestrator::openAudioFile(std::string filename) {
 }
 
 void Orchestrator::createCubesInCircle(size_t cubes) {
-	float angleIncrement = 360.0f / cubes;
-	for (int i = 0; i < cubes; i++) {
+	GLfloat angleIncrement = 360.0f / cubes;
+	for (GLint i = 0; i < cubes; i++) {
 		Mesh* cube = drawer.create();
 		cube->initFromFile("media/models/cube.obj");
 		// TODO: See if we can move these calculations to the vertex shader?
-		float angle = angleIncrement * (i + 1);
-		float x = radius * cos(angle);
-		float z = radius * sin(angle);
-		cube->translate(x, 0.0f, z);
+		GLfloat angle = angleIncrement * (i + 1);
+		cube->rotate(angle, 0.0f, 1.0f, 0.0f);
+		cube->translate(10.0f, 0.0f, 0.0f);
+		
 	}
 	drawer.setup();
 }

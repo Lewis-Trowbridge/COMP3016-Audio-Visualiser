@@ -60,7 +60,7 @@ main(int argc, char** argv)
 
 	glfwInit();
 
-	GLFWwindow* window = glfwCreateWindow(800, 600, "Textured Cube", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(800, 600, "Visualiser", NULL, NULL);
 
 	glfwMakeContextCurrent(window);
 	glewInit();
