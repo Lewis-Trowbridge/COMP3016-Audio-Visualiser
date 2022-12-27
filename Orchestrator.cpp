@@ -21,7 +21,6 @@ void Orchestrator::createCubesInCircle(size_t cubes) {
 		GLfloat angle = angleIncrement * (i + 1);
 		cube->rotate(angle, 0.0f, 1.0f, 0.0f);
 		cube->translate(10.0f, 0.0f, 0.0f);
-		
 	}
 	drawer.setup();
 }

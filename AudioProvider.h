@@ -12,4 +12,5 @@ public:
 	AudioProvider();
 	bool openFile(std::string filename);
 	std::vector<float> getFrame();
+	double getLengthOfFrameInSeconds();
 };

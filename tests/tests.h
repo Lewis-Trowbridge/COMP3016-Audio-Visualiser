@@ -37,6 +37,13 @@ TEST_SUITE("AudioProvider") {
         std::vector<float> actual = provider.getFrame();
         CHECK(actual.size() == 0);
     }
+    
+    TEST_CASE("AudioProvider gets the length of a frame from a given MP3 in seconds") {
+        AudioProvider provider = AudioProvider();
+        provider.openFile("media/audio/tone.mp3");
+        double actual = provider.getLengthOfFrameInSeconds();
+        CHECK(actual == 0.026122448979591838);
+    }
 }
 
 TEST_SUITE("FrequencyProvider") {
