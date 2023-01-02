@@ -24,4 +24,5 @@ private:
 	FrequencyProvider frequencyProvider;
 	AudioProvider audioProvider;
 	VisualiserImGUIWindow visualiserWindow;
+	bool playing;
 };

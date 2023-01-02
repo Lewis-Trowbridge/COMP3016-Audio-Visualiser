@@ -5,13 +5,15 @@ VisualiserImGUIWindow::VisualiserImGUIWindow() {
 	cameraMode = nullptr;
 }
 
-void VisualiserImGUIWindow::setup(CameraMode* cameraMode) {
+void VisualiserImGUIWindow::setup(CameraMode* cameraMode, bool* playing) {
 	this->cameraMode = cameraMode;
+	this->playing = playing;
 }
 
 void VisualiserImGUIWindow::draw() {
 	if (show) {
 		ImGui::Begin("Visualiser controls");
+
 		std::string stringCameraValue;
 		switch (*cameraMode) {
 		case LOCKED:
@@ -24,6 +26,18 @@ void VisualiserImGUIWindow::draw() {
 			ImGui::Text("Camera mode: Manual");
 			break;
 		}
+
+		std::string buttonTitle;
+		if (*playing) {
+			buttonTitle = "Stop";
+		}
+		else {
+			buttonTitle = "Play";
+		}
+		
+		if (ImGui::Button(buttonTitle.c_str())) {
+			*playing = !*playing;
+		};
 
 
 		ImGui::End();
