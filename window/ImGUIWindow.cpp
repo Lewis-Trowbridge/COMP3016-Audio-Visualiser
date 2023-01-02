@@ -5,9 +5,10 @@ VisualiserImGUIWindow::VisualiserImGUIWindow() {
 	cameraMode = nullptr;
 }
 
-void VisualiserImGUIWindow::setup(CameraMode* cameraMode, bool* playing) {
+void VisualiserImGUIWindow::setup(CameraMode* cameraMode, bool* playing, double* elapsedTime) {
 	this->cameraMode = cameraMode;
 	this->playing = playing;
+	this->elapsedTime = elapsedTime;
 }
 
 void VisualiserImGUIWindow::draw() {
@@ -38,6 +39,12 @@ void VisualiserImGUIWindow::draw() {
 		if (ImGui::Button(buttonTitle.c_str())) {
 			*playing = !*playing;
 		};
+
+		ImGui::SameLine();
+
+		std::stringstream elapsedStringStream = std::stringstream();
+		elapsedStringStream << std::fixed << std::setprecision(2) << *elapsedTime;
+		ImGui::Text(elapsedStringStream.str().c_str());
 
 
 		ImGui::End();

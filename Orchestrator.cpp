@@ -4,11 +4,12 @@ const GLint radius = 10;
 
 Orchestrator::Orchestrator(size_t cubes) {
 	this->cubes = cubes;
-	this->audioSecondsLength;
+	this->audioSecondsLength = 0.0;
+	this->elapsedTime = 0.0;
 	drawer = Drawer();
 	audioProvider = AudioProvider();
 	frequencyProvider = FrequencyProvider();
-	visualiserWindow.setup(&cameraMode, &playing);
+	visualiserWindow.setup(&cameraMode, &playing, &elapsedTime);
 
 
 	drawer.view = glm::translate(drawer.view, glm::vec3(0.0f, -3.0f, -15.0f));
@@ -18,6 +19,7 @@ Orchestrator::Orchestrator(size_t cubes) {
 void Orchestrator::openAudioFile(std::string filename) {
 	audioProvider.openFile(filename);
 	audioSecondsLength = audioProvider.getLengthOfFrameInSeconds();
+	elapsedTime = 0.0;
 }
 
 void Orchestrator::createCubesInCircle() {
@@ -47,9 +49,12 @@ void Orchestrator::playAudioFrame() {
 			for (int i = 0; i < cubes; i++) {
 				drawer.verticallyScaleMesh(i, buckets[i]);
 			}
+			elapsedTime += audioSecondsLength;
 		}
 
 		// TODO: Add playing frame out of speakers
+
+		
 	}
 }
 

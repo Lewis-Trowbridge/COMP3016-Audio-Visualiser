@@ -25,4 +25,5 @@ private:
 	AudioProvider audioProvider;
 	VisualiserImGUIWindow visualiserWindow;
 	bool playing;
+	double elapsedTime;
 };
