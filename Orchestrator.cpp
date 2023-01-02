@@ -8,6 +8,7 @@ Orchestrator::Orchestrator(size_t cubes) {
 	drawer = Drawer();
 	audioProvider = AudioProvider();
 	frequencyProvider = FrequencyProvider();
+	visualiserWindow.setup(&cameraMode);
 
 
 	drawer.view = glm::translate(drawer.view, glm::vec3(0.0f, -3.0f, -15.0f));
@@ -46,6 +47,10 @@ void Orchestrator::playAudioFrame() {
 	}
 	
 	// TODO: Add playing frame out of speakers
+}
+
+void Orchestrator::drawControls() {
+	visualiserWindow.draw();
 }
 
 void Orchestrator::moveCameraRight() {
