@@ -8,7 +8,7 @@ Orchestrator::Orchestrator(size_t cubes) {
 	drawer = Drawer();
 	audioProvider = AudioProvider();
 	frequencyProvider = FrequencyProvider();
-	visualiserWindow.setup(&cameraMode);
+	visualiserWindow.setup(&cameraMode, &playing);
 
 
 	drawer.view = glm::translate(drawer.view, glm::vec3(0.0f, -3.0f, -15.0f));
@@ -27,26 +27,30 @@ void Orchestrator::createCubesInCircle() {
 		cube->initFromFile("media/models/cube.obj");
 		// TODO: See if we can move these calculations to the vertex shader?
 		GLfloat angle = angleIncrement * (i + 1);
+		cube->scale(1.0f, 5.0f, 1.0f, false);
 		cube->rotate(angle, 0.0f, 1.0f, 0.0f);
 		cube->translate(10.0f, 0.0f, 0.0f);
 		cube->saveMatrix(); 
 	}
 	drawer.setup();
+	playing = true;
 }
 
 void Orchestrator::playAudioFrame() {
 	if (cameraMode == AUTOMATIC) {
 		moveCameraRight();
 	}
-	std::vector<float> frame = audioProvider.getFrame();
-	if (frame.size() != 0) {
-		std::vector<float> buckets = frequencyProvider.getFrequencies(&frame, cubes);
-		for (int i = 0; i < cubes; i++) {
-			drawer.verticallyScaleMesh(i, buckets[i]);
+	if (playing) {
+		std::vector<float> frame = audioProvider.getFrame();
+		if (frame.size() != 0) {
+			std::vector<float> buckets = frequencyProvider.getFrequencies(&frame, cubes);
+			for (int i = 0; i < cubes; i++) {
+				drawer.verticallyScaleMesh(i, buckets[i]);
+			}
 		}
+
+		// TODO: Add playing frame out of speakers
 	}
-	
-	// TODO: Add playing frame out of speakers
 }
 
 void Orchestrator::drawControls() {

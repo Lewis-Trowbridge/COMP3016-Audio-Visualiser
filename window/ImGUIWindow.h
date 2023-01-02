@@ -8,9 +8,10 @@ public:
 	bool show;
 
 	VisualiserImGUIWindow();
-	void setup(CameraMode* cameraMode);
+	void setup(CameraMode* cameraMode, bool* playing);
 	void draw();
 
 private:
 	CameraMode* cameraMode;
+	bool* playing;
 };
