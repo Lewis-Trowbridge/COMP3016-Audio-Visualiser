@@ -19,6 +19,15 @@ Orchestrator orchestrator = Orchestrator(16);
 #define BUFFER_OFFSET(a) ((void*)(a))
 
 
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	if (key == GLFW_KEY_RIGHT && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
+		orchestrator.moveCameraRight();
+	}
+	if (key == GLFW_KEY_LEFT && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
+		orchestrator.moveCameraLeft();
+	}
+}
+
 void
 init(void)
 {
@@ -67,6 +76,7 @@ main(int argc, char** argv)
 	GLFWwindow* window = glfwCreateWindow(800, 600, "Visualiser", NULL, NULL);
 
 	glfwMakeContextCurrent(window);
+	glfwSetKeyCallback(window, &keyCallback);
 	glewInit();
 
 	init();

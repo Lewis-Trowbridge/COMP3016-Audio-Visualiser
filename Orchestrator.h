@@ -11,6 +11,8 @@ public:
 	void openAudioFile(std::string filename);
 	void createCubesInCircle();
 	void playAudioFrame();
+	void moveCameraRight();
+	void moveCameraLeft();
 private:
 	size_t cubes;
 	FrequencyProvider frequencyProvider;

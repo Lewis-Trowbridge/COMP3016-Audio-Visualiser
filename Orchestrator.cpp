@@ -40,3 +40,11 @@ void Orchestrator::playAudioFrame() {
 	
 	// TODO: Add playing frame out of speakers
 }
+
+void Orchestrator::moveCameraRight() {
+	drawer.view = glm::rotate(drawer.view, glm::radians(5.0f), glm::vec3(0.0f, -1.0f, 0.0f));
+}
+
+void Orchestrator::moveCameraLeft() {
+	drawer.view = glm::rotate(drawer.view, glm::radians(5.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+}
