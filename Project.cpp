@@ -20,11 +20,16 @@ Orchestrator orchestrator = Orchestrator(16);
 
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-	if (key == GLFW_KEY_RIGHT && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
-		orchestrator.moveCameraRight();
+	if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
+		orchestrator.cycleCameraMode();
 	}
-	if (key == GLFW_KEY_LEFT && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
-		orchestrator.moveCameraLeft();
+	if (orchestrator.cameraMode == MANUAL) {
+		if (key == GLFW_KEY_RIGHT && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
+			orchestrator.moveCameraRight();
+		}
+		if (key == GLFW_KEY_LEFT && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
+			orchestrator.moveCameraLeft();
+		}
 	}
 }
 

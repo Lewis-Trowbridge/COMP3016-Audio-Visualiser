@@ -30,6 +30,9 @@ void Orchestrator::createCubesInCircle() {
 }
 
 void Orchestrator::playAudioFrame() {
+	if (cameraMode == AUTOMATIC) {
+		moveCameraRight();
+	}
 	std::vector<float> frame = audioProvider.getFrame();
 	if (frame.size() != 0) {
 		std::vector<float> buckets = frequencyProvider.getFrequencies(&frame, cubes);
@@ -47,4 +50,17 @@ void Orchestrator::moveCameraRight() {
 
 void Orchestrator::moveCameraLeft() {
 	drawer.view = glm::rotate(drawer.view, glm::radians(5.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+}
+
+void Orchestrator::cycleCameraMode() {
+	switch (cameraMode) {
+	case LOCKED:
+		cameraMode = AUTOMATIC;
+		break;
+	case AUTOMATIC:
+		cameraMode = MANUAL;
+		break;
+	case MANUAL:
+		cameraMode = LOCKED;
+	}
 }
