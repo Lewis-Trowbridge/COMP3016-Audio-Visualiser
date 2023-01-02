@@ -7,6 +7,10 @@
     "freeglut",
     "glfw3",
     "glm",
+    {
+      "name": "imgui",
+      "features": [ "glfw-binding", "opengl3-binding" ]
+    },
     "tinyfiledialogs",
     "mpg123",
     "kissfft"

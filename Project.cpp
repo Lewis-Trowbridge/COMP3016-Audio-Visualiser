@@ -82,6 +82,18 @@ main(int argc, char** argv)
 
 	glfwMakeContextCurrent(window);
 	glfwSetKeyCallback(window, &keyCallback);
+
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	ImGui::StyleColorsDark();
+	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	// Despite the init name, we use OpenGL 4 by using the latest compatible version string:
+	// https://github.com/ocornut/imgui/blob/e57871bb95faec757e51214bc0e1ae29b13258ab/backends/imgui_impl_opengl3.cpp#L86
+	ImGui_ImplOpenGL3_Init("#version 430 core");
+
+	bool shouldShowDemoWindow = true;
+
 	glewInit();
 
 	init();
@@ -92,10 +104,24 @@ main(int argc, char** argv)
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 		display();
+
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		ImGui::ShowDemoWindow(&shouldShowDemoWindow);
+
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 		std::this_thread::sleep_for(std::chrono::duration<double>(orchestrator.audioSecondsLength));
 	}
+
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
 
 	glfwDestroyWindow(window);
 

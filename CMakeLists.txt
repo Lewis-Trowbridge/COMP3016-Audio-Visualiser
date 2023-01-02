@@ -7,6 +7,7 @@ find_package(GLEW REQUIRED)
 find_package(GLUT REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
+find_package(imgui CONFIG REQUIRED)
 find_package(tinyfiledialogs REQUIRED)
 find_package(mpg123 CONFIG REQUIRED)
 find_package(unofficial-kissfft CONFIG REQUIRED)
@@ -26,6 +27,7 @@ target_link_libraries(visualiser
   GLUT::GLUT
   glfw
   glm::glm
+  imgui::imgui
   tinyfiledialogs::tinyfiledialogs
   MPG123::libmpg123
   MPG123::libout123
