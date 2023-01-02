@@ -15,18 +15,24 @@ void VisualiserImGUIWindow::draw() {
 	if (show) {
 		ImGui::Begin("Visualiser controls");
 
+		ImGui::Text("Camera mode:");
+
 		std::string stringCameraValue;
 		switch (*cameraMode) {
 		case LOCKED:
-			ImGui::Text("Camera mode: Locked");
+			stringCameraValue = "Locked";
 			break;
 		case AUTOMATIC:
-			ImGui::Text("Camera mode: Automatic");
+			stringCameraValue = "Automatic";
 			break;
 		case MANUAL:
-			ImGui::Text("Camera mode: Manual");
+			stringCameraValue = "Manual";
 			break;
 		}
+
+		ImGui::SameLine();
+
+		ImGui::Text(stringCameraValue.c_str());
 
 		std::string buttonTitle;
 		if (*playing) {
