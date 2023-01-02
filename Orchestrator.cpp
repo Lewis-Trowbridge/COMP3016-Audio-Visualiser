@@ -8,6 +8,10 @@ Orchestrator::Orchestrator(size_t cubes) {
 	drawer = Drawer();
 	audioProvider = AudioProvider();
 	frequencyProvider = FrequencyProvider();
+
+
+	drawer.view = glm::translate(drawer.view, glm::vec3(0.0f, -3.0f, -15.0f));
+	drawer.view = glm::rotate(drawer.view, glm::radians(25.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 }
 
 void Orchestrator::openAudioFile(std::string filename) {
@@ -24,12 +28,15 @@ void Orchestrator::createCubesInCircle() {
 		GLfloat angle = angleIncrement * (i + 1);
 		cube->rotate(angle, 0.0f, 1.0f, 0.0f);
 		cube->translate(10.0f, 0.0f, 0.0f);
-		cube->saveMatrix();
+		cube->saveMatrix(); 
 	}
 	drawer.setup();
 }
 
 void Orchestrator::playAudioFrame() {
+	if (cameraMode == AUTOMATIC) {
+		moveCameraRight();
+	}
 	std::vector<float> frame = audioProvider.getFrame();
 	if (frame.size() != 0) {
 		std::vector<float> buckets = frequencyProvider.getFrequencies(&frame, cubes);
@@ -39,4 +46,25 @@ void Orchestrator::playAudioFrame() {
 	}
 	
 	// TODO: Add playing frame out of speakers
+}
+
+void Orchestrator::moveCameraRight() {
+	drawer.view = glm::rotate(drawer.view, glm::radians(5.0f), glm::vec3(0.0f, -1.0f, 0.0f));
+}
+
+void Orchestrator::moveCameraLeft() {
+	drawer.view = glm::rotate(drawer.view, glm::radians(5.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+}
+
+void Orchestrator::cycleCameraMode() {
+	switch (cameraMode) {
+	case LOCKED:
+		cameraMode = AUTOMATIC;
+		break;
+	case AUTOMATIC:
+		cameraMode = MANUAL;
+		break;
+	case MANUAL:
+		cameraMode = LOCKED;
+	}
 }

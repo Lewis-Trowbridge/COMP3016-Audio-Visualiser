@@ -175,7 +175,6 @@ void Drawer::loadTexture(std::string texturePath) {
 Drawer::Drawer() {
     // creating the view matrix
     view = glm::mat4(1.0f);
-    view = glm::translate(view, glm::vec3(0.0f, -3.0f, -10.0f));
 
     // creating the projection matrix
     projection = glm::perspective(45.0f, 4.0f / 3, 0.1f, 20.0f);

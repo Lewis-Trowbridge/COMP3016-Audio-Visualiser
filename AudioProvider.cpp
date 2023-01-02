@@ -11,33 +11,17 @@ bool AudioProvider::openFile(std::string filename) {
 	return err == MPG123_OK;
 }
 
-// Taken from: https://stackoverflow.com/questions/3991478/building-a-32-bit-float-out-of-its-4-composite-bytes
-float bytesToFloat(unsigned char b0, unsigned char b1, unsigned char b2, unsigned char b3)
-{
-	float output;
-
-	*((unsigned char*)(&output) + 3) = b0;
-	*((unsigned char*)(&output) + 2) = b1;
-	*((unsigned char*)(&output) + 1) = b2;
-	*((unsigned char*)(&output) + 0) = b3;
-
-	return output;
-}
-
 std::vector<float> AudioProvider::getFrame() {
-	std::vector<unsigned char> test = std::vector<unsigned char>();
-	unsigned char* audioData = test.data();
-	size_t length;
-	off_t offset;
 	std::vector<float> mp3Data = std::vector<float>();
-	err = mpg123_decode_frame(handle, &offset, &audioData, &length);
+	// Assign pointer to memory so that we can make a pointer to it
+	float* disposablePointer;
+	size_t returnedByteLength;
+	off_t offset;
+	// Read data while casting to unsigned char pointer to read/reinterpret memory as floats directly
+	err = mpg123_decode_frame(handle, &offset, (unsigned char**)&disposablePointer, &returnedByteLength);
 	if (err == MPG123_OK) {
-		for (int i = 0; i < length; i += 4) {
-			mp3Data.push_back(bytesToFloat(audioData[i], audioData[i + 1], audioData[i + 2], audioData[i + 3]));
-		}
-	}
-	else {
-		mpg123_strerror(handle);
+		// Create new vector containing data 
+		mp3Data = std::vector<float>(disposablePointer, disposablePointer + returnedByteLength / sizeof(float));
 	}
 	return mp3Data;
 }
