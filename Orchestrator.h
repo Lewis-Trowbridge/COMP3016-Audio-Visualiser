@@ -2,12 +2,8 @@
 #include "AudioProvider.h"
 #include "FrequencyProvider.h"
 #include "models/ModelDraw.h"
-
-enum CameraMode {
-	LOCKED,
-	MANUAL,
-	AUTOMATIC
-};
+#include "window/ImGUIWindow.h"
+#include "CameraMode.h"
 
 class Orchestrator {
 public:
@@ -19,6 +15,7 @@ public:
 	void openAudioFile(std::string filename);
 	void createCubesInCircle();
 	void playAudioFrame();
+	void drawControls();
 	void moveCameraRight();
 	void moveCameraLeft();
 	void cycleCameraMode();
@@ -26,4 +23,5 @@ private:
 	size_t cubes;
 	FrequencyProvider frequencyProvider;
 	AudioProvider audioProvider;
+	VisualiserImGUIWindow visualiserWindow;
 };
