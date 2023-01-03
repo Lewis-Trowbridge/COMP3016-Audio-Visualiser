@@ -3,6 +3,9 @@
 VisualiserImGUIWindow::VisualiserImGUIWindow() {
 	show = true;
 	cameraMode = nullptr;
+	playing = nullptr;
+	elapsedTime = nullptr;
+	shouldOpenFileDialog = true;
 }
 
 void VisualiserImGUIWindow::setup(CameraMode* cameraMode, bool* playing, double* elapsedTime) {
@@ -51,6 +54,10 @@ void VisualiserImGUIWindow::draw() {
 		std::stringstream elapsedStringStream = std::stringstream();
 		elapsedStringStream << std::fixed << std::setprecision(2) << *elapsedTime;
 		ImGui::Text(elapsedStringStream.str().c_str());
+
+		if (ImGui::Button("Open file")) {
+			shouldOpenFileDialog = true;
+		};
 
 
 		ImGui::End();
