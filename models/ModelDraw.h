@@ -36,6 +36,7 @@ public:
     GLuint vaoIndex;
     Indexes bufferIndices;
     size_t numIndices;
+    GLfloat colourScale;
 
     glm::mat4 modelMatrix;
 
