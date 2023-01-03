@@ -4,6 +4,7 @@
 #include "models/ModelDraw.h"
 #include "window/ImGUIWindow.h"
 #include "CameraMode.h"
+#include <tinyfiledialogs.h>
 
 class Orchestrator {
 public:
@@ -12,7 +13,7 @@ public:
 	CameraMode cameraMode;
 
 	Orchestrator(size_t cubes);
-	void openAudioFile(std::string filename);
+	void openAudioFile();
 	void createCubesInCircle();
 	void playAudioFrame();
 	void drawControls();
@@ -21,9 +22,12 @@ public:
 	void cycleCameraMode();
 private:
 	size_t cubes;
+	std::string filename;
 	FrequencyProvider frequencyProvider;
 	AudioProvider audioProvider;
 	VisualiserImGUIWindow visualiserWindow;
 	bool playing;
 	double elapsedTime;
+
+	void openFileDialog();
 };

@@ -37,7 +37,7 @@ void
 init(void)
 {
 	orchestrator.createCubesInCircle();
-	orchestrator.openAudioFile("media/audio/tone.mp3");
+	orchestrator.openAudioFile();
 }
 
 

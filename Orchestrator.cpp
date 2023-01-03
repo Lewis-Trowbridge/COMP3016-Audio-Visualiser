@@ -4,11 +4,9 @@ const GLint radius = 10;
 
 Orchestrator::Orchestrator(size_t cubes) {
 	this->cubes = cubes;
+	this->filename = "";
 	this->audioSecondsLength = 0.0;
 	this->elapsedTime = 0.0;
-	drawer = Drawer();
-	audioProvider = AudioProvider();
-	frequencyProvider = FrequencyProvider();
 	visualiserWindow.setup(&cameraMode, &playing, &elapsedTime);
 
 
@@ -16,7 +14,14 @@ Orchestrator::Orchestrator(size_t cubes) {
 	drawer.view = glm::rotate(drawer.view, glm::radians(25.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 }
 
-void Orchestrator::openAudioFile(std::string filename) {
+void Orchestrator::openFileDialog() {
+	std::vector<char*> filters = { "*.mp3" };
+	filename = tinyfd_openFileDialog("Open MP3 file", NULL,
+		1, filters.data(), "mp3 files", false);
+}
+
+void Orchestrator::openAudioFile() {
+	openFileDialog();
 	audioProvider.openFile(filename);
 	audioSecondsLength = audioProvider.getLengthOfFrameInSeconds();
 	elapsedTime = 0.0;
