@@ -158,7 +158,7 @@ void Drawer::loadTexture(std::string texturePath) {
     // load image, create texture and generate mipmaps
     GLint width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-    unsigned char* data = stbi_load(texturePath.c_str(), &width, &height, &nrChannels, 0);
+    unsigned char* data = stbi_load(texturePath.c_str(), &width, &height, &nrChannels, STBI_rgb_alpha);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
@@ -202,7 +202,7 @@ void Drawer::setup() {
     {
         assignedMeshes[i].setupMesh();
     }
-    loadTexture("media/textures/awesomeface.png");
+    loadTexture("media/textures/lines.png");
     glUniform1i(glGetUniformLocation(program, "texture1"), textures[0]);
 }
 
