@@ -7,7 +7,7 @@ Orchestrator::Orchestrator(size_t cubes) {
 	this->filename = "";
 	this->audioSecondsLength = 0.0;
 	this->elapsedTime = 0.0;
-	visualiserWindow.setup(&cameraMode, &playing, &elapsedTime);
+	visualiserWindow.setup(&filename, &cameraMode, &playing, &elapsedTime);
 
 
 	drawer.view = glm::translate(drawer.view, glm::vec3(0.0f, -3.0f, -15.0f));

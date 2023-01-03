@@ -11,10 +11,11 @@ public:
 	bool shouldOpenFileDialog;
 
 	VisualiserImGUIWindow();
-	void setup(CameraMode* cameraMode, bool* playing, double* elaspedTime);
+	void setup(std::string* filename, CameraMode* cameraMode, bool* playing, double* elaspedTime);
 	void draw();
 
 private:
+	std::string* filename;
 	CameraMode* cameraMode;
 	bool* playing;
 	double* elapsedTime;

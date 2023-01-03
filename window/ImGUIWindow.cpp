@@ -8,7 +8,8 @@ VisualiserImGUIWindow::VisualiserImGUIWindow() {
 	shouldOpenFileDialog = true;
 }
 
-void VisualiserImGUIWindow::setup(CameraMode* cameraMode, bool* playing, double* elapsedTime) {
+void VisualiserImGUIWindow::setup(std::string* filename, CameraMode* cameraMode, bool* playing, double* elapsedTime) {
+	this->filename = filename;
 	this->cameraMode = cameraMode;
 	this->playing = playing;
 	this->elapsedTime = elapsedTime;
@@ -17,6 +18,11 @@ void VisualiserImGUIWindow::setup(CameraMode* cameraMode, bool* playing, double*
 void VisualiserImGUIWindow::draw() {
 	if (show) {
 		ImGui::Begin("Visualiser controls");
+
+		if (*filename != "") {
+			// TODO: Only compatible with Windows filesystems, extend to unix-based filesystems
+			ImGui::Text((filename->substr(filename->find_last_of("\\\\")).c_str()));
+		}
 
 		ImGui::Text("Camera mode:");
 
