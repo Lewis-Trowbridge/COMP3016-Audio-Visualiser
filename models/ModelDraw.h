@@ -20,6 +20,11 @@ public:
     GLuint colours;
 };
 
+enum Attrib_IDs {
+    vPosition = 0, cPosition = 1, tPosition = 2 
+};
+
+
 class Mesh {
 public:
     // mesh data
@@ -31,6 +36,7 @@ public:
     GLuint vaoIndex;
     Indexes bufferIndices;
     size_t numIndices;
+    GLfloat colourScale;
 
     glm::mat4 modelMatrix;
 
