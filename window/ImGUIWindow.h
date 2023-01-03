@@ -8,6 +8,7 @@
 class VisualiserImGUIWindow {
 public:
 	bool show;
+	bool shouldOpenFileDialog;
 
 	VisualiserImGUIWindow();
 	void setup(CameraMode* cameraMode, bool* playing, double* elaspedTime);

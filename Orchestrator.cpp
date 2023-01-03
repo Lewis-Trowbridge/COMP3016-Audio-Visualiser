@@ -18,10 +18,11 @@ void Orchestrator::openFileDialog() {
 	std::vector<char*> filters = { "*.mp3" };
 	filename = tinyfd_openFileDialog("Open MP3 file", NULL,
 		1, filters.data(), "mp3 files", false);
+	visualiserWindow.shouldOpenFileDialog = false;
+	openAudioFile();
 }
 
 void Orchestrator::openAudioFile() {
-	openFileDialog();
 	audioProvider.openFile(filename);
 	audioSecondsLength = audioProvider.getLengthOfFrameInSeconds();
 	elapsedTime = 0.0;
@@ -65,6 +66,9 @@ void Orchestrator::playAudioFrame() {
 
 void Orchestrator::drawControls() {
 	visualiserWindow.draw();
+	if (visualiserWindow.shouldOpenFileDialog) {
+		openFileDialog();
+	}
 }
 
 void Orchestrator::moveCameraRight() {
