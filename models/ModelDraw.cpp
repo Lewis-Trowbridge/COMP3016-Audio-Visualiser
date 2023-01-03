@@ -8,8 +8,6 @@ GLfloat  colours[][4] = {
         { 1.0f, 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 0.0f, 1.0f },
 };
 
-enum Attrib_IDs { vPosition = 0, cPosition = 1, tPosition = 2 };
-
 void insertStringValuesToGLVector(std::string valueString, std::string delimiter, std::vector<GLfloat>* recipient) {
     std::vector<std::string> values = splitString(valueString, delimiter);
     for (int i = 0; i < values.size(); i++) {
@@ -207,13 +205,17 @@ void Drawer::setup() {
 }
 
 void Drawer::draw() {
+    int viewLoc = glGetUniformLocation(program, "view");
+    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+    int projLoc = glGetUniformLocation(program, "projection");
+    glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+
     for (size_t i = 0; i < assignedMeshes.size(); i++)
     {
         Mesh mesh = assignedMeshes[i];
-        glm::mat4 mvp = projection * view * mesh.modelMatrix;
 
-        int mvpLoc = glGetUniformLocation(program, "mvp");
-        glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(mvp));
+        int mvpLoc = glGetUniformLocation(program, "model");
+        glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(mesh.modelMatrix));
 
         mesh.draw();
     }
