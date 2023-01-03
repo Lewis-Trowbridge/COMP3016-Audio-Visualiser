@@ -21,7 +21,10 @@ public:
 };
 
 enum Attrib_IDs {
-    vPosition = 0, cPosition = 1, tPosition = 2 
+    vPosition = 0,
+    cPosition = 1,
+    tPosition = 2,
+    nPosition = 3
 };
 
 

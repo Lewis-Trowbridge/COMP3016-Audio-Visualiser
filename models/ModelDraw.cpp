@@ -113,12 +113,19 @@ void Mesh::setupMesh() {
 
     glVertexAttribPointer(tPosition, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
+    // Prepare normals data
+    glGenBuffers(1, &bufferIndices.normals);
+    glBindBuffer(GL_ARRAY_BUFFER, bufferIndices.normals);
+    glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(GLfloat),
+        normals.data(), GL_STATIC_DRAW);
+
     numIndices = indices.size();
 
     // Enable all VBOs
     glEnableVertexAttribArray(vPosition);
     glEnableVertexAttribArray(cPosition);
     glEnableVertexAttribArray(tPosition);
+    glEnableVertexAttribArray(nPosition);
 }
 
 void Mesh::draw() {
