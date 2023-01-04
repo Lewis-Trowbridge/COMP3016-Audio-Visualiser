@@ -27,10 +27,21 @@ enum Attrib_IDs {
     nPosition = 3
 };
 
+class PhongLightingInfo {
+public:
+    glm::vec3 ambient;
+    glm::vec3 lightPos;
+    glm::vec3 diffuseLight;
+    glm::vec3 specularLight;
+    GLfloat shininess;
+
+    PhongLightingInfo();
+    void setup(GLint program);
+};
+
 
 class Mesh {
 public:
-    // mesh data
     std::vector<GLfloat> vertices;
     std::vector<GLuint> indices;
     std::vector<GLfloat> texCoords;
@@ -67,6 +78,7 @@ public:
     glm::mat4 view;
     glm::mat4 projection;
 private:
+    PhongLightingInfo lighting;
     std::vector<Mesh> assignedMeshes;
     std::vector<GLuint> textures;
     GLuint program;

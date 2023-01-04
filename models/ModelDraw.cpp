@@ -22,6 +22,16 @@ void insertStringValuesToGLVector(std::string valueString, std::string delimiter
     }
 }
 
+PhongLightingInfo::PhongLightingInfo() {
+    ambient = glm::vec3(0.9, 0.9, 0.9);
+}
+
+void PhongLightingInfo::setup(GLint program) {
+    GLint ambientLoc = glGetUniformLocation(program, "ambient");
+    glUniform3fv(ambientLoc, 1, &ambient[0]);
+
+}
+
 Mesh::Mesh() {
     modelMatrix = glm::mat4(1.0f);
     modelMatrix = glm::scale(modelMatrix, glm::vec3(0.5f, 0.5f, 0.5f));
@@ -182,6 +192,7 @@ void Drawer::setup() {
     }
     loadTexture("media/textures/lines.png");
     glUniform1i(glGetUniformLocation(program, "texture1"), textures[0]);
+    lighting.setup(program);
 }
 
 void Drawer::draw() {
