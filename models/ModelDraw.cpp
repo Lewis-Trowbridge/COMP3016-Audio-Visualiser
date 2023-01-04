@@ -17,7 +17,7 @@ void insertStringValuesToGLVector(std::string valueString, std::string delimiter
 
 void insertStringValuesToGLVector(std::string valueString, std::string delimiter, std::vector<GLuint>* recipient) {
     std::vector<std::string> values = splitString(valueString, delimiter);
-    for (int i = 0; i < values.size(); i+=3) {
+    for (int i = 0; i < values.size(); i++) {
         recipient->push_back(stoul(values[i]) -1);
     }
 }
@@ -49,47 +49,74 @@ bool Mesh::initFromFile(std::string filename) {
     if (!reader.openFile(filename)) {
         return false;
     }
+
+    std::vector<GLfloat> vertexData = std::vector<GLfloat>();
+    std::vector<GLfloat> texCoordsData = std::vector<GLfloat>();
+    std::vector<GLfloat> normalsData = std::vector<GLfloat>();
+    std::vector<GLuint> facesData = std::vector<GLuint>();
+
     std::string object = reader.getElement("object")[0];
     do {
         object = reader.getNextElement("object")[0];
         std::string stringValue;
 
         // Move the subposition to the first vertex
-        insertStringValuesToGLVector(reader.getElementAttribute("object", "vertex"), " ", &vertices);
+        insertStringValuesToGLVector(reader.getElementAttribute("object", "vertex"), " ", &vertexData);
         // Read the rest of the vertices
         while ((stringValue = reader.getNextElementAttribute("object", "vertex")) != "") {
-            insertStringValuesToGLVector(stringValue, " ", &vertices);
+            insertStringValuesToGLVector(stringValue, " ", &vertexData);
         }
 
         // Move the subposition to the first texcoord
-        insertStringValuesToGLVector(reader.getElementAttribute("object", "vertex-texture"), " ", &texCoords);
+        insertStringValuesToGLVector(reader.getElementAttribute("object", "vertex-texture"), " ", &texCoordsData);
         // Read the rest of the texcoords
         while ((stringValue = reader.getNextElementAttribute("object", "vertex-texture")) != "") {
-            insertStringValuesToGLVector(stringValue, " ", &texCoords);
+            insertStringValuesToGLVector(stringValue, " ", &texCoordsData);
         }
 
         // Move the subposition to the first normal
-        insertStringValuesToGLVector(reader.getElementAttribute("object", "vertex-normal"), " ", &normals);
+        insertStringValuesToGLVector(reader.getElementAttribute("object", "vertex-normal"), " ", &normalsData);
         // Read the rest of the normal
         while ((stringValue = reader.getNextElementAttribute("object", "vertex-normal")) != "") {
-            insertStringValuesToGLVector(stringValue, " ", &normals);
+            insertStringValuesToGLVector(stringValue, " ", &normalsData);
         }
 
         // Move the subposition to the first face
         std::vector<std::string> faceTriplets = splitString(reader.getElementAttribute("object", "face"), " ");
         for (int i = 0; i < faceTriplets.size(); i++)
         {
-            insertStringValuesToGLVector(faceTriplets[i], "/", &indices);
+            insertStringValuesToGLVector(faceTriplets[i], "/", &facesData);
         }
         // Read the rest of the faces
         while ((stringValue = reader.getNextElementAttribute("object", "face")) != "") {
             std::vector<std::string> faceTriplets = splitString(stringValue, " ");
             for (int i = 0; i < faceTriplets.size(); i++)
             {
-                insertStringValuesToGLVector(faceTriplets[i], "/", &indices);
+                insertStringValuesToGLVector(faceTriplets[i], "/", &facesData);
             }
         }
     } while (object != "");
+
+    // Reorganising of data according to face data
+    for (int i = 0; i < facesData.size(); i+=9) {
+        for (int j = 0; j < 9; j+=3) {
+            // Grab vertices at positions specified in OBJ file
+            vertices.push_back(vertexData[3 * facesData[i + j]]);
+            vertices.push_back(vertexData[3 * facesData[i + j] + 1]);
+            vertices.push_back(vertexData[3 * facesData[i + j] + 2]);
+            // Grab tex coords at positions specified in OBJ file
+            texCoords.push_back(texCoordsData[2 * facesData[i + j + 1]]);
+            texCoords.push_back(texCoordsData[2 * facesData[i + j + 1] + 1]);
+            // Grab normals at positions specified in OBJ file
+            normals.push_back(normalsData[3 * facesData[i + j + 2]]);
+            normals.push_back(normalsData[3 * facesData[i + j + 2] + 1]);
+            normals.push_back(normalsData[3 * facesData[i + j + 2] + 2]);
+        }
+    }
+
+    for (GLint i = 0; i < facesData.size() / 3; i++) {
+        indices.push_back(i);
+    }
 
 
     return true;
