@@ -26,6 +26,8 @@ PhongLightingInfo::PhongLightingInfo() {
     ambient = glm::vec3(0.9f, 0.9f, 0.9f);
     lightPos = glm::vec3(0.0f, 1.0f, 0.0f);
     diffuseColour = glm::vec3(0.9f, 0.9f, 0.9f);
+    specularColour = glm::vec3(0.0f, 0.0f, 1.0f);
+    shininess = 128;
 }
 
 void PhongLightingInfo::setup(GLint program) {
@@ -37,6 +39,12 @@ void PhongLightingInfo::setup(GLint program) {
 
     GLint diffuseColourLoc = glGetUniformLocation(program, "diffuseColour");
     glUniform3fv(diffuseColourLoc, 1 ,glm::value_ptr(diffuseColour));
+
+    GLint specularColourLoc = glGetUniformLocation(program, "specularColour");
+    glUniform3fv(specularColourLoc, 1, glm::value_ptr(specularColour));
+
+    GLint shininessLoc = glGetUniformLocation(program, "shininess");
+    glUniform1f(shininessLoc, shininess);
 }
 
 Mesh::Mesh() {

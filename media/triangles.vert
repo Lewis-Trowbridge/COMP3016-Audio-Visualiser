@@ -13,6 +13,8 @@ uniform float scale;
 uniform vec3 ambient;
 uniform vec3 lightPos;
 uniform vec3 diffuseColour;
+uniform vec3 specularColour;
+uniform float shininess;
 
 out vec4 fragColour;
 out vec2 TexCoord;
@@ -36,6 +38,7 @@ main()
 	vec3 reflection = reflect(-viewSpaceLight, viewSpaceNormal);
 	
 	vec3 diffuse = max(0.0, dot(viewSpaceNormal, viewSpaceLight)) * diffuseColour;
+	vec3 specular = pow(max(dot(reflection, viewSpaceView), 0.0), shininess) * specularColour;
 
 	vec4 generatedColour = vec4(max(0.5, scale), 0.2, 0.2, 1.0);
 
