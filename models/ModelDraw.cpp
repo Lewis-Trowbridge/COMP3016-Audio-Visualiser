@@ -129,6 +129,8 @@ void Mesh::setupMesh() {
     glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(GLfloat),
         normals.data(), GL_STATIC_DRAW);
 
+    glVertexAttribPointer(nPosition, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
     numIndices = indices.size();
 
     // Enable all VBOs
