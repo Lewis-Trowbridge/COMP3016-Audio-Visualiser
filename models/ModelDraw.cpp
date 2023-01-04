@@ -25,20 +25,15 @@ PhongLightingInfo::PhongLightingInfo() {
 }
 
 void PhongLightingInfo::setup(GLint program) {
-    GLint ambientLoc = glGetUniformLocation(program, "ambient");
-    glUniform3fv(ambientLoc, 1, glm::value_ptr(ambient));
+    setUniform(program, "ambient", &ambient);
 
-    GLint lightPosLoc = glGetUniformLocation(program, "lightPos");
-    glUniform3fv(lightPosLoc, 1, glm::value_ptr(lightPos));
+    setUniform(program, "lightPos", &lightPos);
 
-    GLint diffuseColourLoc = glGetUniformLocation(program, "diffuseColour");
-    glUniform3fv(diffuseColourLoc, 1 ,glm::value_ptr(diffuseColour));
+    setUniform(program, "diffuseColour", &diffuseColour);
 
-    GLint specularColourLoc = glGetUniformLocation(program, "specularColour");
-    glUniform3fv(specularColourLoc, 1, glm::value_ptr(specularColour));
+    setUniform(program, "specularColour", &specularColour);
 
-    GLint shininessLoc = glGetUniformLocation(program, "shininess");
-    glUniform1f(shininessLoc, shininess);
+    setUniform(program, "shininess", &shininess);
 }
 
 Mesh::Mesh() {
@@ -226,20 +221,15 @@ void Drawer::setup() {
 }
 
 void Drawer::draw() {
-    GLint viewLoc = glGetUniformLocation(program, "view");
-    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-    GLint projLoc = glGetUniformLocation(program, "projection");
-    glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+    setUniform(program, "view", &view);
+    setUniform(program, "projection", &projection);
 
     for (size_t i = 0; i < assignedMeshes.size(); i++)
     {
         Mesh mesh = assignedMeshes[i];
 
-        GLint mvpLoc = glGetUniformLocation(program, "model");
-        glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(mesh.modelMatrix));
-
-        GLint scaleLoc = glGetUniformLocation(program, "scale");
-        glUniform1f(scaleLoc, mesh.colourScale);
+        setUniform(program, "model", &mesh.modelMatrix);
+        setUniform(program, "scale", &mesh.colourScale);
 
         mesh.draw();
     }

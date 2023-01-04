@@ -11,3 +11,22 @@ std::vector<std::string> splitString(std::string toSplit, std::string delimiter)
 	result.push_back(toSplit);
 	return result;
 }
+
+void setUniform(GLint program, std::string name, float* value) {
+	GLuint loc = glGetUniformLocation(program, name.c_str());
+	glUniform1fv(loc, 1, value);
+}
+
+void setUniform(GLint program, std::string name, glm::mat4* value) {
+	GLuint loc = glGetUniformLocation(program, name.c_str());
+	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(*value));
+}
+
+void setUniform(GLint program, std::string name, glm::vec3* value) {
+	GLuint loc = glGetUniformLocation(program, name.c_str());
+	glUniform3fv(loc, 1, glm::value_ptr(*value));
+};
+void setUniform(GLint program, std::string name, glm::vec4* value) {
+	GLuint loc = glGetUniformLocation(program, name.c_str());
+	glUniform4fv(loc, 1, glm::value_ptr(*value));
+};
