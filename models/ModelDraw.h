@@ -17,22 +17,34 @@ public:
     GLuint indices;
     GLuint texCoords;
     GLuint normals;
-    GLuint colours;
 };
 
 enum Attrib_IDs {
-    vPosition = 0, cPosition = 1, tPosition = 2 
+    vPosition = 0,
+    tPosition = 1,
+    nPosition = 2
+};
+
+class PhongLightingInfo {
+public:
+    glm::vec3 ambient;
+    glm::vec3 lightPos;
+    glm::vec3 diffuseColour;
+    glm::vec3 specularColour;
+    GLfloat shininess;
+
+    PhongLightingInfo();
+    void setup(GLint program);
 };
 
 
 class Mesh {
 public:
-    // mesh data
     std::vector<GLfloat> vertices;
     std::vector<GLuint> indices;
     std::vector<GLfloat> texCoords;
     std::vector<GLfloat> normals;
-    //std::vector<GLfloat> colours;
+
     GLuint vaoIndex;
     Indexes bufferIndices;
     size_t numIndices;
@@ -64,6 +76,7 @@ public:
     glm::mat4 view;
     glm::mat4 projection;
 private:
+    PhongLightingInfo lighting;
     std::vector<Mesh> assignedMeshes;
     std::vector<GLuint> textures;
     GLuint program;
