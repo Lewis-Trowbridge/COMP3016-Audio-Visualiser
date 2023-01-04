@@ -49,9 +49,9 @@ init(void)
 void
 display(void)
 {
-	static const float black[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	static const std::vector<float> black = { 0.0f, 0.0f, 0.0f, 0.0f };
 
-	glClearBufferfv(GL_COLOR, 0, black);
+	glClearBufferfv(GL_COLOR, 0, black.data());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//// Ensure faces are correctly culled
 	glFrontFace(GL_CCW);

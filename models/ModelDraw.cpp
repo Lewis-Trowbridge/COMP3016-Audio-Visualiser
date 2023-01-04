@@ -2,12 +2,6 @@
 #include "../stb_image.h"
 #include "ModelDraw.h"
 
-GLfloat  colours[][4] = {
-        { 0.0f, 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f, 0.0f },
-        { 0.0f, 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f, 0.0f },
-        { 0.0f, 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f, 0.0f },
-};
-
 void insertStringValuesToGLVector(std::string valueString, std::string delimiter, std::vector<GLfloat>* recipient) {
     std::vector<std::string> values = splitString(valueString, delimiter);
     for (int i = 0; i < values.size(); i++) {
@@ -150,13 +144,6 @@ void Mesh::setupMesh() {
 
     glVertexAttribPointer(vPosition, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-    // Prepare colours data
-    glGenBuffers(1, &bufferIndices.colours);
-    glBindBuffer(GL_ARRAY_BUFFER, bufferIndices.colours);
-    glBufferStorage(GL_ARRAY_BUFFER, sizeof(colours), colours, 0);
-
-    glVertexAttribPointer(cPosition, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
     // Prepare tex coords data
     glGenBuffers(1, &bufferIndices.texCoords);
     glBindBuffer(GL_ARRAY_BUFFER, bufferIndices.texCoords);
@@ -177,7 +164,6 @@ void Mesh::setupMesh() {
 
     // Enable all VBOs
     glEnableVertexAttribArray(vPosition);
-    glEnableVertexAttribArray(cPosition);
     glEnableVertexAttribArray(tPosition);
     glEnableVertexAttribArray(nPosition);
 }

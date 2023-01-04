@@ -17,14 +17,12 @@ public:
     GLuint indices;
     GLuint texCoords;
     GLuint normals;
-    GLuint colours;
 };
 
 enum Attrib_IDs {
     vPosition = 0,
-    cPosition = 1,
-    tPosition = 2,
-    nPosition = 3
+    tPosition = 1,
+    nPosition = 2
 };
 
 class PhongLightingInfo {
@@ -46,7 +44,7 @@ public:
     std::vector<GLuint> indices;
     std::vector<GLfloat> texCoords;
     std::vector<GLfloat> normals;
-    //std::vector<GLfloat> colours;
+
     GLuint vaoIndex;
     Indexes bufferIndices;
     size_t numIndices;
