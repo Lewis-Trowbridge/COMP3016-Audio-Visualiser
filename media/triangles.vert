@@ -11,6 +11,8 @@ uniform mat4 projection;
 uniform float scale;
 
 uniform vec3 ambient;
+uniform vec3 lightPos;
+uniform vec3 diffuseColour;
 
 out vec4 fragColour;
 out vec2 TexCoord;
@@ -19,8 +21,27 @@ main()
 {
 	float ambientStrength = 0.9;
 	vec3 alteredAmbient = ambientStrength * ambient;
-	fragColour = vec4((alteredAmbient * vec3(max(0.3, scale), 0.0, 0.0)), 1.0);
 
-	gl_Position = projection * view * model * vec4(vPosition,1.0);
+	mat4 modelView = view * model;
+	vec4 viewSpacePos = modelView * vec4(vPosition, 1.0);
+
+	vec3 viewSpaceNormal = mat3(modelView) * vNormal;
+	vec3 viewSpaceLight = lightPos - viewSpacePos.xyz;
+	vec3 viewSpaceView = -viewSpacePos.xyz;
+
+	viewSpaceNormal = normalize(viewSpaceNormal);
+	viewSpaceLight = normalize(viewSpaceLight);
+	viewSpaceView = normalize(viewSpaceView);
+
+	vec3 reflection = reflect(-viewSpaceLight, viewSpaceNormal);
+	
+	vec3 diffuse = max(0.0, dot(viewSpaceNormal, viewSpaceLight)) * diffuseColour;
+
+	vec4 generatedColour = vec4(max(0.5, scale), 0.2, 0.2, 1.0);
+
+
+	fragColour = (vec4(alteredAmbient, 1.0) + vec4(diffuse, 1.0)) * generatedColour;
+
+	gl_Position = projection * viewSpacePos;
 	TexCoord = aTexCoord;
 }

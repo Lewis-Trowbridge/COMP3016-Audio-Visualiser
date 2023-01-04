@@ -31,8 +31,8 @@ class PhongLightingInfo {
 public:
     glm::vec3 ambient;
     glm::vec3 lightPos;
-    glm::vec3 diffuseLight;
-    glm::vec3 specularLight;
+    glm::vec3 diffuseColour;
+    glm::vec3 specularColour;
     GLfloat shininess;
 
     PhongLightingInfo();

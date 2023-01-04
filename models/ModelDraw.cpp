@@ -23,13 +23,20 @@ void insertStringValuesToGLVector(std::string valueString, std::string delimiter
 }
 
 PhongLightingInfo::PhongLightingInfo() {
-    ambient = glm::vec3(0.9, 0.9, 0.9);
+    ambient = glm::vec3(0.9f, 0.9f, 0.9f);
+    lightPos = glm::vec3(0.0f, 5.0f, 0.0f);
+    diffuseColour = glm::vec3(0.9f, 0.9f, 0.9f);
 }
 
 void PhongLightingInfo::setup(GLint program) {
     GLint ambientLoc = glGetUniformLocation(program, "ambient");
-    glUniform3fv(ambientLoc, 1, &ambient[0]);
+    glUniform3fv(ambientLoc, 1, glm::value_ptr(ambient));
 
+    GLint lightPosLoc = glGetUniformLocation(program, "lightPos");
+    glUniform3fv(lightPosLoc, 1, glm::value_ptr(lightPos));
+
+    GLint diffuseColourLoc = glGetUniformLocation(program, "diffuseColour");
+    glUniform3fv(diffuseColourLoc, 1 ,glm::value_ptr(diffuseColour));
 }
 
 Mesh::Mesh() {
