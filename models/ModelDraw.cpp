@@ -24,7 +24,7 @@ void insertStringValuesToGLVector(std::string valueString, std::string delimiter
 
 PhongLightingInfo::PhongLightingInfo() {
     ambient = glm::vec3(0.9f, 0.9f, 0.9f);
-    lightPos = glm::vec3(0.0f, 5.0f, 0.0f);
+    lightPos = glm::vec3(0.0f, 1.0f, 0.0f);
     diffuseColour = glm::vec3(0.9f, 0.9f, 0.9f);
 }
 
