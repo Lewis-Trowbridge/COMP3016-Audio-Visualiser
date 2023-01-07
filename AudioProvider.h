@@ -13,4 +13,5 @@ public:
 	bool openFile(std::string filename);
 	std::vector<float> getFrame();
 	double getLengthOfFrameInSeconds();
+	~AudioProvider();
 };

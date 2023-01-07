@@ -29,3 +29,7 @@ std::vector<float> AudioProvider::getFrame() {
 double AudioProvider::getLengthOfFrameInSeconds() {
 	return mpg123_tpf(handle);
 }
+
+AudioProvider::~AudioProvider() {
+	mpg123_delete(handle);
+}
