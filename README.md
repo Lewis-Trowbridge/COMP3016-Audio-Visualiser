@@ -26,8 +26,10 @@ If using Visual Studio, you may need some extra setup to make sure that VCPKG is
 
 ![image](https://user-images.githubusercontent.com/22503395/211206779-e2be87ab-c408-402b-9b3b-ceb166fff804.png)
 
-## Issues with MinGW
-Unfortunately, the VCPKG port of [yasm](https://yasm.tortall.net/) which is used in MPG123, unfortunately is not compatible with MinGW. This means that the program cannot be compiled with MinGW, but can with MSVC. A MinGW config is included as this was working for a long period of time, however this is not recommended.
+On top of this, to use MinGW you will need to update the path in CMakeSettings.json.
+
+![image](https://user-images.githubusercontent.com/22503395/211209543-5068e83f-9461-48c1-82d5-2b6b99bd06a9.png)
+
 
 # Usage
 ## Tests
