@@ -30,6 +30,5 @@ target_link_libraries(visualiser
   imgui::imgui
   tinyfiledialogs::tinyfiledialogs
   MPG123::libmpg123
-  MPG123::libout123
   unofficial::kissfft::kissfft
 )
