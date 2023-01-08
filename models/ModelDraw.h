@@ -25,6 +25,7 @@ enum Attrib_IDs {
     nPosition = 2
 };
 
+// A class to contain all lighting information to implement the Phong lighting model.
 class PhongLightingInfo {
 public:
     glm::vec3 ambient;
@@ -34,10 +35,11 @@ public:
     GLfloat shininess;
 
     PhongLightingInfo();
+    // Sets up lighting uniforms in OpenGL.
     void setup(GLint program);
 };
 
-
+// A class that represents a single mesh.
 class Mesh {
 public:
     std::vector<GLfloat> vertices;
@@ -53,24 +55,37 @@ public:
     glm::mat4 modelMatrix;
 
     Mesh();
+    // Initialises a mesh's data from a file.
     bool initFromFile(std::string filename);
+    // Loads mesh data into OpenGL. Do not call yourself, call Drawer.setup instead.
     void setupMesh();
+    // Draws data in OpenGL. DO not call yourself, call Drawer.draw instead.
     void draw();
+    // Performs a translation on the mesh's model matrix.
     void translate(GLfloat x, GLfloat y, GLfloat z);
+    // Performs a scale on the mesh's model matrix. Use saved=true to perform on the saved matrix rather than the current model matrix.
     void scale(GLfloat x, GLfloat y, GLfloat z, bool saved);
+    // Performs a rotation on the mesh's model matrix.
     void rotate(GLfloat angle, GLfloat x, GLfloat y, GLfloat z);
+    // Save the current model matrix to be used as a base for future operations.
     void saveMatrix();
 private:
     glm::mat4 savedModelMatrix;
 };
 
+// A class that handles the setup and drawing of all assigned meshes.
 class Drawer {
 public:
     Drawer();
+    // Creates and registers a mesh, returning a pointer to the mesh for initialisation.
     Mesh* create();
+    // Sets up all registered meshes.
     void setup();
+    // Draws all registered meshes.
     void draw();
+    // Loads and registers a texture
     void loadTexture(std::string texturePath);
+    // Vertically scales a given mesh by a given value.
     void verticallyScaleMesh(size_t meshNumber, GLfloat value);
 
     glm::mat4 view;

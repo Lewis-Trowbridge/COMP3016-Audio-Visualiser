@@ -1,6 +1,30 @@
 ﻿{
   "configurations": [
     {
+      "name": "MSVCx64-Debug",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "cmakeToolchain": "C:/Users/ltrowbridge/vcpkg/scripts/buildsystems/vcpkg.cmake"
+    },
+    {
+      "name": "MSVCx64-Release",
+      "generator": "Ninja",
+      "configurationType": "Release",
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "cmakeToolchain": "C:/Users/ltrowbridge/vcpkg/scripts/buildsystems/vcpkg.cmake"
+    },
+    {
       "name": "Mingw64-Debug",
       "generator": "Ninja",
       "configurationType": "Debug",
@@ -9,11 +33,10 @@
       "cmakeCommandArgs": "",
       "buildCommandArgs": "-v",
       "ctestCommandArgs": "",
-      "cmakeToolchain": "D:/Program Files (x86)/vcpkg/scripts/buildsystems/vcpkg.cmake",
       "inheritEnvironments": [ "mingw_64" ],
       "environments": [
         {
-          "MINGW64_ROOT": "D:/Program Files (x86)/MSYS2/mingw64/",
+          "MINGW64_ROOT": "C:/Strawberry/c",
           "BIN_ROOT": "${env.MINGW64_ROOT}/bin",
           "FLAVOR": "x86_64-w64-mingw32",
           "TOOLSET_VERSION": "9.1.0",
@@ -32,20 +55,66 @@
           "name": "CMAKE_CXX_COMPILER",
           "value": "${env.BIN_ROOT}/g++.exe",
           "type": "STRING"
+        },
+        {
+          "name": "VCPKG_HOST_TRIPLET",
+          "value": "x64-mingw-static",
+          "type": "STRING"
+        },
+        {
+          "name": "VCPKG_TARGET_TRIPLET",
+          "value": "x64-mingw-static",
+          "type": "STRING"
         }
       ],
-      "intelliSenseMode": "linux-gcc-x64"
+      "intelliSenseMode": "linux-gcc-x64",
+      "cmakeToolchain": "C:/Users/ltrowbridge/vcpkg/scripts/buildsystems/vcpkg.cmake"
     },
     {
-      "name": "MSVCx64-Debug",
+      "name": "Mingw64-Release",
       "generator": "Ninja",
-      "configurationType": "Debug",
+      "configurationType": "Release",
       "buildRoot": "${projectDir}\\out\\build\\${name}",
       "installRoot": "${projectDir}\\out\\install\\${name}",
       "cmakeCommandArgs": "",
-      "buildCommandArgs": "",
+      "buildCommandArgs": "-v",
       "ctestCommandArgs": "",
-      "inheritEnvironments": [ "msvc_x64_x64" ]
+      "inheritEnvironments": [ "mingw_64" ],
+      "environments": [
+        {
+          "MINGW64_ROOT": "C:/Strawberry/c",
+          "BIN_ROOT": "${env.MINGW64_ROOT}/bin",
+          "FLAVOR": "x86_64-w64-mingw32",
+          "TOOLSET_VERSION": "9.1.0",
+          "PATH": "${env.MINGW64_ROOT}/bin;${env.MINGW64_ROOT}/../usr/local/bin;${env.MINGW64_ROOT}/../usr/bin;${env.MINGW64_ROOT}/../bin;${env.PATH}",
+          "INCLUDE": "${env.INCLUDE};${env.MINGW64_ROOT}/include/c++/${env.TOOLSET_VERSION};${env.MINGW64_ROOT}/include/c++/${env.TOOLSET_VERSION}/tr1;${env.MINGW64_ROOT}/include/c++/${env.TOOLSET_VERSION}/${env.FLAVOR}",
+          "environment": "mingw_64"
+        }
+      ],
+      "variables": [
+        {
+          "name": "CMAKE_C_COMPILER",
+          "value": "${env.BIN_ROOT}/gcc.exe",
+          "type": "STRING"
+        },
+        {
+          "name": "CMAKE_CXX_COMPILER",
+          "value": "${env.BIN_ROOT}/g++.exe",
+          "type": "STRING"
+        },
+        {
+          "name": "VCPKG_HOST_TRIPLET",
+          "value": "x64-mingw-static",
+          "type": "STRING"
+        },
+        {
+          "name": "VCPKG_TARGET_TRIPLET",
+          "value": "x64-mingw-static",
+          "type": "STRING"
+        }
+      ],
+      "intelliSenseMode": "linux-gcc-x64",
+      "cmakeToolchain": "C:/Users/ltrowbridge/vcpkg/scripts/buildsystems/vcpkg.cmake"
     }
   ]
 }
