@@ -10,13 +10,7 @@
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "msvc_x64_x64" ],
-      "variables": [
-        {
-          "name": "CMAKE_TOOLCHAIN_FILE",
-          "value": "C:/Users/ltrowbridge/vcpkg/scripts/buildsystems/vcpkg.cmake",
-          "type": "FILEPATH"
-        }
-      ]
+      "cmakeToolchain": "C:/Users/ltrowbridge/vcpkg/scripts/buildsystems/vcpkg.cmake"
     },
     {
       "name": "MSVCx64-Release",
@@ -28,13 +22,7 @@
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "msvc_x64_x64" ],
-      "variables": [
-        {
-          "name": "CMAKE_TOOLCHAIN_FILE",
-          "value": "C:/Users/ltrowbridge/vcpkg/scripts/buildsystems/vcpkg.cmake",
-          "type": "FILEPATH"
-        }
-      ]
+      "cmakeToolchain": "C:/Users/ltrowbridge/vcpkg/scripts/buildsystems/vcpkg.cmake"
     },
     {
       "name": "Mingw64-Debug",
@@ -69,11 +57,6 @@
           "type": "STRING"
         },
         {
-          "name": "CMAKE_TOOLCHAIN_FILE",
-          "value": "C:/Users/ltrowbridge/vcpkg/scripts/buildsystems/vcpkg.cmake",
-          "type": "FILEPATH"
-        },
-        {
           "name": "VCPKG_HOST_TRIPLET",
           "value": "x64-mingw-static",
           "type": "STRING"
@@ -84,7 +67,8 @@
           "type": "STRING"
         }
       ],
-      "intelliSenseMode": "linux-gcc-x64"
+      "intelliSenseMode": "linux-gcc-x64",
+      "cmakeToolchain": "C:/Users/ltrowbridge/vcpkg/scripts/buildsystems/vcpkg.cmake"
     },
     {
       "name": "Mingw64-Release",
@@ -119,11 +103,6 @@
           "type": "STRING"
         },
         {
-          "name": "CMAKE_TOOLCHAIN_FILE",
-          "value": "C:/Users/ltrowbridge/vcpkg/scripts/buildsystems/vcpkg.cmake",
-          "type": "FILEPATH"
-        },
-        {
           "name": "VCPKG_HOST_TRIPLET",
           "value": "x64-mingw-static",
           "type": "STRING"
@@ -134,7 +113,8 @@
           "type": "STRING"
         }
       ],
-      "intelliSenseMode": "linux-gcc-x64"
+      "intelliSenseMode": "linux-gcc-x64",
+      "cmakeToolchain": "C:/Users/ltrowbridge/vcpkg/scripts/buildsystems/vcpkg.cmake"
     }
   ]
 }
