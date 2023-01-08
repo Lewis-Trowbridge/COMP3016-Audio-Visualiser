@@ -1,13 +1,5 @@
 # 2022-COMP3016-C2: Free Project
 
-Please update this file and include the instructions and use this document for your report.
-
-Make sure to work entirely using OpenGL4.X which you can check if your project relies on shader files and does not use fixed functions for rendering.
-
-Ideally keep the setup Rendering toolchain to reduce the trial and error process of finding something new that works for you.
-
-Work incrementally and be aware of the scale and scope of your project.
-
 # Introduction
 
 This project is intended to visualise the audio of MP3 files in 3D space using OpenGL, in a similar process to traditional audio visualisers often used in online music videos (One example here: https://youtu.be/YieDIB7G0J8).
@@ -29,6 +21,13 @@ The code uses the provided LoadShaders and loadTexture components, repackaging t
 This project uses VCPKG, a package manager for C++, which integrates with CMake. The setup instructions are provided here: https://vcpkg.io/en/getting-started.html. The project uses VCPKG's manifest mode.
 
 Once installed, either open the project in Visual Studio as a CMake project, or use CMake to build the project as normal.
+
+If using Visual Studio, you may need some extra setup to make sure that VCPKG is configured correctly. Using ```vcpkg integrate install``` should allow this, however if this doesn't work, try settting the VCPKG CMake toolchain file manually in CMakeSettings.json.
+
+![image](https://user-images.githubusercontent.com/22503395/211206779-e2be87ab-c408-402b-9b3b-ceb166fff804.png)
+
+## Issues with MinGW
+Unfortunately, the VCPKG port of [yasm](https://yasm.tortall.net/) which is used in MPG123, unfortunately is not compatible with MinGW. This means that the program cannot be compiled with MinGW, but can with MSVC. A MinGW config is included as this was working for a long period of time, however this is not recommended.
 
 # Usage
 ## Tests
@@ -66,8 +65,6 @@ The user will interact with the project by selecting between 3 different camera 
 The project will use the following libraries/packages on top of OpenGL:
 - Dear ImGui: Simple GUI to allow the user to view and control audio playback, including the “resolution” of the visualiser (the sample time slice to visualise)
 - Tiny File Dialogs: Allow the user to open an audio file at runtime
-- OpenAL: Play audio files through speakers
-- LAME: Convert MP3 data into PCM to be read into OpenAL
-- FFTW: Calculate frequencies from PCM data
+- MPG123: Convert MP3 data into PCM to be processed (changed from LAME)
+- KissFFT: Calculate frequencies from PCM data (changed from FFTW)
 - Doctest: Unit testing
-
