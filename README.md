@@ -70,3 +70,8 @@ The project will use the following libraries/packages on top of OpenGL:
 - MPG123: Convert MP3 data into PCM to be processed (changed from LAME)
 - KissFFT: Calculate frequencies from PCM data (changed from FFTW)
 - Doctest: Unit testing
+
+# Video
+The link is here: https://www.youtube.com/watch?v=nuM0bxKY09I
+
+Update: In the video it is stated that MinGW compilation does not work. This was true at the time of recording, but using the instructions above in the setup section should allow it to start working.
